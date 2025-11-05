@@ -1,7 +1,6 @@
 # TypeScript Deep Dive: From Theory to Practice
 
 ## Table of Contents
-
 1. [Historical Context](#historical-context)
 2. [Type Systems Theory](#type-systems-theory)
 3. [JavaScript's Type System](#javascripts-type-system)
@@ -25,22 +24,20 @@ JavaScript was created in **10 days** for browser scripting, embodying a "move f
 Understanding type systems is fundamental to appreciating what TypeScript brings to JavaScript.
 
 ### Static Type Systems
+*Examples: TypeScript, Java, C++*
 
-_Examples: TypeScript, Java, C++_
-
--   Types checked **before runtime**
--   More upfront work, fewer runtime surprises
--   Better tooling support (autocomplete, refactoring)
--   Catches errors early in development
+- Types checked **before runtime**
+- More upfront work, fewer runtime surprises
+- Better tooling support (autocomplete, refactoring)
+- Catches errors early in development
 
 ### Dynamic Type Systems
+*Examples: JavaScript, Python, Ruby*
 
-_Examples: JavaScript, Python, Ruby_
-
--   Types checked **during execution**
--   Faster to write, harder to maintain
--   More runtime flexibility
--   Errors surface when code runs
+- Types checked **during execution**
+- Faster to write, harder to maintain
+- More runtime flexibility
+- Errors surface when code runs
 
 ---
 
@@ -52,11 +49,11 @@ _Examples: JavaScript, Python, Ruby_
 
 ```javascript
 // JavaScript - Dynamic typing
-let value = 42; // value is a number
-console.log(value * 2); // 84
+let value = 42;           // value is a number
+console.log(value * 2);   // 84
 
-value = "hello"; // Now it's a string
-console.log(value * 2); // NaN (error discovered at runtime)
+value = "hello";          // Now it's a string
+console.log(value * 2);   // NaN (error discovered at runtime)
 ```
 
 ### Loose vs Strong Typing
@@ -65,9 +62,9 @@ console.log(value * 2); // NaN (error discovered at runtime)
 
 ```javascript
 // JavaScript
-console.log("5" + 3); // "53" (number coerced to string)
-console.log("5" - 3); // 2 (string coerced to number)
-console.log(true + 1); // 2 (boolean coerced to number)
+console.log("5" + 3);   // "53" (number coerced to string)
+console.log("5" - 3);   // 2 (string coerced to number)
+console.log(true + 1);  // 2 (boolean coerced to number)
 ```
 
 ### Key Insight
@@ -93,23 +90,21 @@ TypeScript = JavaScript + Optional Type Annotations + Type Checker
 ### Side-by-Side Comparison
 
 **JavaScript:**
-
 ```javascript
 function greet(name) {
-	return "Hello, " + name.toUpperCase();
+  return "Hello, " + name.toUpperCase();
 }
 
-greet(42); // Runtime error: name.toUpperCase is not a function
+greet(42);  // Runtime error: name.toUpperCase is not a function
 ```
 
 **TypeScript:**
-
 ```typescript
 function greet(name: string): string {
-	return "Hello, " + name.toUpperCase();
+  return "Hello, " + name.toUpperCase();
 }
 
-greet(42); // Compile-time error: Argument of type 'number' is not assignable to parameter of type 'string'
+greet(42);  // ✗ Compile-time error: Argument of type 'number' is not assignable to parameter of type 'string'
 ```
 
 ---
@@ -132,9 +127,9 @@ TypeScript can automatically determine types:
 
 ```typescript
 // Type inference (TypeScript figures it out)
-let name = "Alice"; // Inferred as string
-let count = 0; // Inferred as number
-let items = [1, 2, 3]; // Inferred as number[]
+let name = "Alice";  // Inferred as string
+let count = 0;       // Inferred as number
+let items = [1, 2, 3];  // Inferred as number[]
 ```
 
 **Comparison with static typing:**
@@ -142,10 +137,10 @@ let items = [1, 2, 3]; // Inferred as number[]
 ```typescript
 // Static typing (explicit)
 let value: number = 42;
-value = "hello"; // Error: Type 'string' is not assignable to type 'number'
+value = "hello";  // ✗ Error: Type 'string' is not assignable to type 'number'
 
 // Strong typing prevents coercion
-let result: string = "5" + 3; // Error: Can't add number to string
+let result: string = "5" + 3;  // ✗ Error: Can't add number to string
 ```
 
 ---
@@ -155,7 +150,6 @@ let result: string = "5" + 3; // Error: Can't add number to string
 TypeScript uses bidirectional type checking, flowing type information in two directions:
 
 ### Top-Down Flow
-
 Expected type flows into the expression:
 
 ```typescript
@@ -163,17 +157,16 @@ let numbers: number[] = [1, 2, 3];
 // TypeScript knows the array should contain numbers
 
 function process(callback: (x: number) => void) {
-	callback(42);
+  callback(42);
 }
 
 process((x) => {
-	// is inferred as number from the function signature
-	console.log(x * 2);
+  // x is inferred as number from the function signature
+  console.log(x * 2);
 });
 ```
 
 ### Bottom-Up Flow
-
 Expression type flows outward:
 
 ```typescript
@@ -181,7 +174,7 @@ let value = 42;
 // TypeScript infers value is type 'number'
 
 function add(a: number, b: number) {
-	return a + b; // Return type inferred as number
+  return a + b;  // Return type inferred as number
 }
 ```
 
@@ -191,19 +184,19 @@ TypeScript uses structural typing, meaning compatibility is based on shape, not 
 
 ```typescript
 interface Animal {
-	name: string;
+  name: string;
 }
 
 interface Dog {
-	name: string;
-	breed: string;
+  name: string;
+  breed: string;
 }
 
 let animal: Animal = { name: "Spot" };
 let dog: Dog = { name: "Buddy", breed: "Labrador" };
 
-animal = dog; // OK: Dog has all Animal properties (substitutability)
-dog = animal; // Error: Animal missing 'breed'
+animal = dog;  // ✓ OK: Dog has all Animal properties (substitutability)
+dog = animal;  // ✗ Error: Animal missing 'breed'
 ```
 
 **Key principle:** A type is compatible if it has at least the required properties.
@@ -214,14 +207,14 @@ TypeScript prevents accidental typos in object literals:
 
 ```typescript
 interface Person {
-	name: string;
-	age: number;
+  name: string;
+  age: number;
 }
 
 let person: Person = {
-	name: "Alice",
-	age: 30,
-	salary: 50000, // Error: Object literal may only specify known properties
+  name: "Alice",
+  age: 30,
+  salary: 50000  // ✗ Error: Object literal may only specify known properties
 };
 ```
 
@@ -235,8 +228,8 @@ Use specific values as types:
 
 ```typescript
 let direction: "north" | "south" | "east" | "west";
-direction = "north"; // OK
-direction = "up"; // Error
+direction = "north";  // ✓ OK
+direction = "up";     // ✗ Error
 
 type Status = "pending" | "approved" | "rejected";
 let orderStatus: Status = "pending";
@@ -248,16 +241,16 @@ A value can be one of several types:
 
 ```typescript
 let age: string | number;
-age = 25; // OK
-age = "twenty"; // OK
-age = true; // Error
+age = 25;        // ✓ OK
+age = "twenty";  // ✓ OK
+age = true;      // ✗ Error
 
 function formatValue(value: string | number) {
-	if (typeof value === "string") {
-		return value.toUpperCase();
-	} else {
-		return value.toFixed(2);
-	}
+  if (typeof value === "string") {
+    return value.toUpperCase();
+  } else {
+    return value.toFixed(2);
+  }
 }
 ```
 
@@ -267,18 +260,18 @@ Combine multiple types into one:
 
 ```typescript
 interface Person {
-	name: string;
+  name: string;
 }
 
 interface Employee {
-	employeeId: number;
+  employeeId: number;
 }
 
 type Staff = Person & Employee;
 
 let staff: Staff = {
-	name: "Alice",
-	employeeId: 123,
+  name: "Alice",
+  employeeId: 123
 };
 ```
 
@@ -288,20 +281,20 @@ Write reusable code that works with multiple types:
 
 ```typescript
 function identity<T>(value: T): T {
-	return value;
+  return value;
 }
 
-let num = identity<number>(42); // T is number
+let num = identity<number>(42);      // T is number
 let str = identity<string>("hello"); // T is string
-let auto = identity(true); // T inferred as boolean
+let auto = identity(true);           // T inferred as boolean
 
 // Generic array operations
 function getFirstElement<T>(arr: T[]): T | undefined {
-	return arr[0];
+  return arr[0];
 }
 
-let firstNum = getFirstElement([1, 2, 3]); // number | undefined
-let firstStr = getFirstElement(["a", "b"]); // string | undefined
+let firstNum = getFirstElement([1, 2, 3]);     // number | undefined
+let firstStr = getFirstElement(["a", "b"]);    // string | undefined
 ```
 
 ---
@@ -314,25 +307,25 @@ The `tsconfig.json` file controls TypeScript's behavior and strictness levels:
 
 ```json
 {
-	"compilerOptions": {
-		"strict": true, // Enable all strict type checking
-		"target": "ES2020", // JavaScript version to compile to
-		"module": "commonjs", // Module system
-		"outDir": "./dist", // Output directory
-		"rootDir": "./src", // Input directory
-		"noImplicitAny": true, // Disallow implicit 'any' types
-		"strictNullChecks": true // Null and undefined handling
-	}
+  "compilerOptions": {
+    "strict": true,              // Enable all strict type checking
+    "target": "ES2020",          // JavaScript version to compile to
+    "module": "commonjs",        // Module system
+    "outDir": "./dist",          // Output directory
+    "rootDir": "./src",          // Input directory
+    "noImplicitAny": true,       // Disallow implicit 'any' types
+    "strictNullChecks": true     // Null and undefined handling
+  }
 }
 ```
 
 ### Key Configuration Options
 
--   **strict**: Enables all strict type checking options
--   **target**: ECMAScript version for output
--   **module**: Module code generation (commonjs, es6, etc.)
--   **noImplicitAny**: Requires explicit types when TypeScript can't infer
--   **strictNullChecks**: Makes null/undefined handling explicit
+- **strict**: Enables all strict type checking options
+- **target**: ECMAScript version for output
+- **module**: Module code generation (commonjs, es6, etc.)
+- **noImplicitAny**: Requires explicit types when TypeScript can't infer
+- **strictNullChecks**: Makes null/undefined handling explicit
 
 ---
 
@@ -346,10 +339,9 @@ TypeScript follows a two-phase approach:
 2. **Runtime execution** - Types are erased, JavaScript runs
 
 **Pros:**
-
--   Zero runtime performance overhead
--   No type checking cost during execution
--   Types serve as documentation and development aid
+- Zero runtime performance overhead
+- No type checking cost during execution
+- Types serve as documentation and development aid
 
 ### TypeScript Compilers
 
@@ -362,11 +354,10 @@ tsc src/index.ts
 ```
 
 **Characteristics:**
-
--   Full type checking
--   Slower build times
--   Complete feature support
--   Generates JavaScript + declaration files
+- Full type checking
+- Slower build times
+- Complete feature support
+- Generates JavaScript + declaration files
 
 #### 2. Strip Types + Separate Check
 
@@ -381,18 +372,17 @@ tsc --noEmit
 ```
 
 **Characteristics:**
-
--   Faster builds
--   Type checking runs separately
--   Parallel processing possible
--   Common in large projects
+- Faster builds
+- Type checking runs separately
+- Parallel processing possible
+- Common in large projects
 
 ### Compilation Strategies Comparison
 
-| Strategy      | Speed  | Type Safety   | Use Case                  |
-| ------------- | ------ | ------------- | ------------------------- |
-| tsc           | Slower | Full checking | Small projects, libraries |
-| Strip + Check | Faster | Separate pass | Large projects, CI/CD     |
+| Strategy | Speed | Type Safety | Use Case |
+|----------|-------|-------------|----------|
+| tsc | Slower | Full checking | Small projects, libraries |
+| Strip + Check | Faster | Separate pass | Large projects, CI/CD |
 
 ### Production Workflow Example
 
@@ -412,12 +402,12 @@ npm run test    # Run tests
 
 TypeScript enhances JavaScript with:
 
--   **Static type checking** without runtime overhead
--   **Type inference** to reduce annotation burden
--   **Structural typing** for flexible compatibility
--   **Advanced constructs** like generics and unions
--   **Configurable strictness** via tsconfig.json
--   **Production-ready tooling** with multiple compilation strategies
+- **Static type checking** without runtime overhead
+- **Type inference** to reduce annotation burden
+- **Structural typing** for flexible compatibility
+- **Advanced constructs** like generics and unions
+- **Configurable strictness** via tsconfig.json
+- **Production-ready tooling** with multiple compilation strategies
 
 The result is a language that catches errors early while maintaining JavaScript's flexibility and runtime performance.
 
@@ -425,4 +415,4 @@ The result is a language that catches errors early while maintaining JavaScript'
 
 ## Additional Resources
 
-For a comprehensive collection of TypeScript tutorials, tools, articles, and learning materials, see the [Extra Resources](../../../Extra-Resources.md) document.
+For a comprehensive collection of TypeScript tutorials, tools, articles, and learning materials, see the [Extra Resources](../../Extra-Resources.md) document.
