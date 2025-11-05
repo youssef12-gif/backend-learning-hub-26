@@ -423,4 +423,6 @@ The result is a language that catches errors early while maintaining JavaScript'
 
 ---
 
-### [Resources for extra knowledge]("/../../../Extra%20Resources.md")
+## Additional Resources
+
+For a comprehensive collection of TypeScript tutorials, tools, articles, and learning materials, see the [Extra Resources](../../../Extra-Resources.md) document.
