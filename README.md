@@ -133,7 +133,7 @@ We welcome contributions! Here's how you can help:
 3. **Submit PRs** - Want to contribute content? Follow our guidelines!
 4. **Share Resources** - Found helpful materials? Share them!
 
-See [CONTRIBUTING.md](more/contributing.md) for detailed guidelines.
+See [CONTRIBUTING.md](More/contributing.md) for detailed guidelines.
 
 ---
 
