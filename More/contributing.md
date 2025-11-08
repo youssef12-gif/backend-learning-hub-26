@@ -64,30 +64,30 @@ Report issues to: omniiaibrhaim2@gmail.com
 
 Create an issue with:
 
-```markdown
-**Bug Description:**
+```
+Bug Description:
 Clear description of what went wrong
 
-**Steps to Reproduce:**
+Steps to Reproduce:
 1. Go to '...'
 2. Run '...'
 3. See error
 
-**Expected Behavior:**
+Expected Behavior:
 What should happen
 
-**Actual Behavior:**
+Actual Behavior:
 What actually happens
 
-**Environment:**
+Environment:
 - OS: [e.g., Windows 10, macOS 13, Ubuntu 22.04]
 - Node.js version: [e.g., 18.16.0]
 - Session: [e.g., Level 1, Session 3]
 
-**Screenshots/Code:**
+Screenshots/Code:
 [If applicable]
 
-**Additional Context:**
+Additional Context:
 Any other relevant information
 ```
 
