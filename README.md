@@ -27,7 +27,9 @@
 
 ## 📖 About This Repository
 
-Welcome to the **Backend Mastery Roadmap**! This repository is your complete guide to becoming a professional backend developer. Designed for our college's student activity backend track, this curriculum takes you from JavaScript basics all the way to deploying microservices in production.
+* Welcome to the **backend-learning-hub-26** ! 
+* This repository is your complete guide to becoming a professional backend developer. 
+* Designed for our college's **OSC ASU** student activity **Backend Committee**, this curriculum takes you from basics all the way to deploying microservices in production.
 
 ---
 ### 🎯 What You'll Learn
