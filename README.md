@@ -42,8 +42,8 @@
 
 | Session | Topic |
 |---------|-------|
-| 01 | JavaScript vs TypeScript + TypeScript Basics|
-| 02 | More TypeScript |
+| 01 | intro + JavaScript |
+| 02 |  TypeScript |
 | 03 | Advanced TypeScript | 
 | 04 | Networking + Node.js |
 | 05 | Express + Node.js | 
