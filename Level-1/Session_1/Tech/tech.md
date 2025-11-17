@@ -155,6 +155,41 @@ for (let i = 0; i < 3; i++) {
 - **`let`** is modern and safe (block-scoped, no re-declaration, better errors)
 - **Always use `let` or `const`**, never `var`
 
+---
+
+  ## Let, const, and var
+
+- **`let`**: Block-scoped, mutable.
+- **`const`**: Block-scoped, immutable (value cannot be reassigned).
+- **`var`**: Function-scoped, mutable (avoid using it in modern code).
+
+```javascript
+let count = 10;
+const PI = 3.14;
+var total = 0; // Older syntax
+
+```
+### What is the output?
+```javascript
+let count = 10;
+console.log(count); 
+let count =12;
+console.log(count); 
+```
+```javascript
+var num = 10;
+console.log(num); 
+var num =12;
+console.log(num); 
+```
+```javascript
+const num = 10;
+console.log(count); 
+const num =12;
+console.log(count); 
+```
+---
+
 ## Data Types
 
 JavaScript has several data types, categorized as:
@@ -274,46 +309,6 @@ let response = null;       // Good: waiting for API response
 ## Comments 
 symbole used for comments in javaScript is `// Single line` for single line and `/* Multi-lines */` for multi-lines
 
----
-## Let, const, and var
-
-- **`let`**: Block-scoped, mutable.
-- **`const`**: Block-scoped, immutable (value cannot be reassigned).
-- **`var`**: Function-scoped, mutable (avoid using it in modern code).
-
-```javascript
-let count = 10;
-const PI = 3.14;
-var total = 0; // Older syntax
-
-```
-### What is the output?
-```javascript
-let count = 10;
-console.log(count); 
-let count =12;
-console.log(count); 
-```
-```javascript
-var num = 10;
-console.log(num); 
-var num =12;
-console.log(num); 
-```
-```javascript
-const num = 10;
-console.log(count); 
-const num =12;
-console.log(count); 
-```
-
-----
-## How to run the code 
-### by 2 ways
-1st way : open terminal then write **`script fileName`**
-
-
-2nd way : open **`index.html`** then right click -> inspect -> console
 ---
 ## Basic Operators
 
