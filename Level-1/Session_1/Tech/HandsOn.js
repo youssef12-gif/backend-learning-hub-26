@@ -23,13 +23,13 @@ console.log("--- 1. Variables & Data Types ---\n");
 
 
 // TODO 1.4: Create a boolean variable 'isStudent' and set it to true
-// let isStudent = 
+
 
 // TODO 1.5: Print all variables and their types
-// console.log("Name:", studentName, "- Type:", typeof studentName);
-// console.log("Birth Year:", birthYear, "- Type:", typeof birthYear);
-// console.log("Age:", age, "- Type:", typeof age);
-// console.log("Is Student:", isStudent, "- Type:", typeof isStudent);
+// console.log("Name:", , "- Type:", );
+// console.log("Birth Year:", , "- Type:",  );
+// console.log("Age:", , "- Type:",  );
+// console.log("Is Student:", , "- Type:",  );
 
 // CHALLENGE 1: What happens if you try to reassign a const variable?
 // Try it and see the error!
@@ -83,7 +83,7 @@ console.log("\n--- 3. Operator Precedence ---\n");
 // console.log("Result 1:", result1); // What do you expect?
 
 // TODO 3.2: Use parentheses to change the order
-// let result2 = (10 + 5) * 2;
+// let result2 = 10 + 5 * 2;
 // console.log("Result 2:", result2);
 
 // CHALLENGE 3: Calculate the average of three numbers
@@ -141,7 +141,7 @@ console.log("\n--- 5. Type Conversion & Coercion ---\n");
 // TODO 5.1: Convert strings to numbers
 // let strNum1 = "25";
 // let strNum2 = "10";
-// let convertedSum = Number(strNum1) + Number(strNum2);
+// let convertedSum =strNum1 + strNum2;
 // console.log("Converted sum:", convertedSum);
 
 // TODO 5.2: See type coercion in action
@@ -195,28 +195,28 @@ console.log("\n--- 7. Strings & String Methods ---\n");
 
 // TODO 7.1: Basic string methods
 // let message = "  Hello Backend World!  ";
-// console.log("Original:", message);
-// console.log("Uppercase:", message.toUpperCase());
-// console.log("Lowercase:", message.toLowerCase());
-// console.log("Trimmed:", message.trim());
-// console.log("Character at index 2:", message.charAt(2));
+// console.log("Original:", );
+// console.log("Uppercase:", );
+// console.log("Lowercase:", );
+// console.log("Trimmed:", );
+// console.log("Character at index 2:", );
 
 // TODO 7.2: String searching
 // let text = "JavaScript is awesome, JavaScript is fun!";
-// console.log("Includes 'awesome':", text.includes("awesome"));
-// console.log("Index of 'JavaScript':", text.indexOf("JavaScript"));
-// console.log("Last index of 'JavaScript':", text.lastIndexOf("JavaScript"));
+// console.log("Includes 'awesome':",);
+// console.log("Index of 'JavaScript':", );
+// console.log("Last index of 'JavaScript':", );
 
 // TODO 7.3: String extraction
 // let fullName = "John Doe Smith";
-// let firstName = fullName.slice(0, 4);
-// let lastName = fullName.slice(-5);
+// let firstName = ;
+// let lastName = ;
 // console.log("First name:", firstName);
 // console.log("Last name:", lastName);
 
 // TODO 7.4: String replacement
 // let sentence = "I love Python. Python is great!";
-// let newSentence = sentence.replaceAll("Python", "JavaScript");
+// let newSentence = ;
 // console.log("New sentence:", newSentence);
 
 // CHALLENGE 7: Extract file extension (like in the session)
@@ -252,7 +252,7 @@ console.log("\n--- 8. Template Literals ---\n");
 // console.log("Name: " + personName + ", Age: " + personAge + ", City: " + personCity);
 
 // New way with template literals:
-// let info = `Name: ${personName}, Age: ${personAge}, City: ${personCity}`;
+// let info = ;
 // console.log(info);
 
 // TODO 8.2: Multi-line strings
@@ -269,15 +269,7 @@ console.log("\n--- 8. Template Literals ---\n");
 // let quantity = 2;
 // let total = price * quantity;
 
-// let receipt = `
-// ========== RECEIPT ==========
-// Item: ${itemName}
-// Price: ${price} EGP
-// Quantity: ${quantity}
-// -------------------------
-// Total: ${total} EGP
-// =============================
-// `;
+// let receipt = 
 // console.log(receipt);
 
 
@@ -289,22 +281,22 @@ console.log("\n--- 9. Functions ---\n");
 
 // TODO 9.1: Create a greeting function
 // function greet(name) {
-//   return `Hello, ${name}!`;
+//  
 // }
 // console.log(greet("Ahmed"));
 
 // TODO 9.2: Create a function that adds two numbers
 // function add(a, b) {
-//   return a + b;
+//   
 // }
 // console.log("5 + 3 =", add(5, 3));
 
 // TODO 9.3: Create an arrow function for multiplication
-// const multiply = (a, b) => a * b;
+// const multiply = ;
 // console.log("4 * 7 =", multiply(4, 7));
 
 // TODO 9.4: Arrow function with implicit return
-// const square = x => x * x;
+// const square = ;
 // console.log("Square of 6:", square(6));
 
 // CHALLENGE 9: Create a function to calculate BMI
@@ -358,12 +350,9 @@ console.log("\n--- 10. Arrays ---\n");
 
 console.log("\n--- 11. Objects ---\n");
 
-// TODO 11.1: Create an object
+// TODO 11.1: Create an object (name,age,major,gpa)
 // let student = {
-//   name: "Sara",
-//   age: 20,
-//   major: "Computer Science",
-//   gpa: 3.8
+//   
 // };
 
 // console.log("Student:", student);
@@ -371,8 +360,7 @@ console.log("\n--- 11. Objects ---\n");
 // console.log("GPA:", student.gpa);
 
 // TODO 11.2: Modify object properties
-// student.age = 21;
-// student.isGraduated = false;
+//
 // console.log("Updated student:", student);
 
 // CHALLENGE 11: Create a book object with title, author, pages, isRead
@@ -382,9 +370,7 @@ console.log("\n--- 11. Objects ---\n");
 //   author: "Robert Martin",
 //   pages: 464,
 //   isRead: true,
-//   getSummary: function() {
-//     return `${this.title} by ${this.author}, ${this.pages} pages`;
-//   }
+//
 // };
 // console.log(book.getSummary());
 
@@ -397,20 +383,19 @@ console.log("\n--- 12. Loops ---\n");
 
 // TODO 12.1: For loop - count from 1 to 5
 // for (let i = 1; i <= 5; i++) {
-//   console.log("Count:", i);
+//   
 // }
 
 // TODO 12.2: Loop through an array
 // let colors = ["Red", "Green", "Blue", "Yellow"];
 // for (let i = 0; i < colors.length; i++) {
-//   console.log(`Color ${i + 1}: ${colors[i]}`);
+//   
 // }
 
 // TODO 12.3: While loop - count down from 5
 // let countdown = 5;
 // while (countdown > 0) {
-//   console.log(countdown);
-//   countdown--;
+//   
 // }
 // console.log("Blast off! 🚀");
 
@@ -453,9 +438,7 @@ Example structure:
 */
 
 // let students = [
-//   { name: "Ahmed", age: 20, grade: 85 },
-//   { name: "Fatma", age: 21, grade: 92 },
-//   { name: "Omar", age: 19, grade: 78 }
+//
 // ];
 
 // function addStudent(name, age, grade) {
@@ -520,3 +503,4 @@ HOW TO RUN THIS FILE:
 Good luck! 🚀
 
 */
+
