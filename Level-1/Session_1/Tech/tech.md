@@ -56,6 +56,105 @@ let age = 25;
 const name = "John";
 var isStudent = true;
 ```
+# `let` vs `var` - Key Differences
+
+## Quick Rule
+**Always use `let` or `const`. Never use `var` in modern JavaScript.**
+
+---
+
+## The 3 Main Differences
+
+### 1. **Scope**
+
+**`var` = Function-scoped** (escapes blocks)
+```javascript
+if (true) {
+  var x = 10;
+}
+console.log(x); // 10 - Works!
+```
+
+**`let` = Block-scoped** (stays inside `{}`)
+```javascript
+if (true) {
+  let y = 10;
+}
+console.log(y); // Error: y is not defined
+```
+
+---
+
+### 2. **Re-declaration**
+
+**`var` allows re-declaration:**
+```javascript
+var num = 10;
+var num = 12; // No error
+console.log(num); // 12
+```
+
+**`let` does NOT:**
+```javascript
+let count = 10;
+let count = 12; // Error: Identifier 'count' has already been declared
+```
+
+---
+
+### 3. **Hoisting**
+
+**`var` is initialized as `undefined`:**
+```javascript
+console.log(x); // undefined (weird but no error)
+var x = 5;
+```
+
+**`let` throws an error before initialization:**
+```javascript
+console.log(y); // Error: Cannot access 'y' before initialization
+let y = 5;
+```
+
+---
+
+## Classic Example: The Loop Bug
+
+**Problem with `var`:**
+```javascript
+for (var i = 0; i < 3; i++) {
+  setTimeout(() => console.log(i), 100);
+}
+// Prints: 3, 3, 3 (all the same!)
+```
+
+**Fixed with `let`:**
+```javascript
+for (let i = 0; i < 3; i++) {
+  setTimeout(() => console.log(i), 100);
+}
+// Prints: 0, 1, 2 (correct!)
+```
+
+---
+
+## Comparison Table
+
+| Feature | `var` | `let` |
+|---------|-------|-------|
+| **Scope** | Function | Block |
+| **Re-declaration** | ✅ Allowed | ❌ Not allowed |
+| **Hoisting behavior** | Initialized as `undefined` | Not initialized (error) |
+| **Use in modern code** | ❌ No | ✅ Yes |
+
+---
+
+## Summary
+
+- **`var`** is old and problematic (function-scoped, allows re-declaration, weird hoisting)
+- **`let`** is modern and safe (block-scoped, no re-declaration, better errors)
+- **Always use `let` or `const`**, never `var`
+
 ## Data Types
 
 JavaScript has several data types, categorized as:
