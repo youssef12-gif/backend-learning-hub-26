@@ -182,6 +182,93 @@ let obj = {}; // Object
 ```javascript
 console.log(typeof "hello") // String
 ```
+
+# `undefined` vs `null`
+
+## Quick Answer
+- **`undefined`** = JavaScript sets this automatically when something hasn't been assigned
+- **`null`** = You (the programmer) set this intentionally to mean "empty" or "no value"
+
+---
+
+## Key Differences
+
+### `undefined`
+**Meaning:** Variable declared but not assigned a value yet
+
+```javascript
+let x;
+console.log(x); // undefined
+
+function test() {
+  // no return statement
+}
+console.log(test()); // undefined
+
+let obj = { name: "Ahmed" };
+console.log(obj.age); // undefined (property doesn't exist)
+```
+
+### `null`
+**Meaning:** Intentionally set to represent "no value" or "empty"
+
+```javascript
+let user = null; // explicitly saying "no user"
+
+// Resetting a value
+let data = { id: 1 };
+data = null; // clearing the data
+```
+
+---
+
+## Comparison Table
+
+| Feature | `undefined` | `null` |
+|---------|-------------|--------|
+| **Set by** | JavaScript (automatically) | You (programmer) |
+| **Meaning** | "Not assigned yet" | "Intentionally empty" |
+| **Type** | `"undefined"` | `"object"` (historical bug) |
+| **Usage** | Default, uninitialized | Explicit "no value" |
+
+---
+
+## Type Check
+
+```javascript
+console.log(typeof undefined); // "undefined"
+console.log(typeof null);      // "object" (this is a bug in JavaScript!)
+```
+
+---
+
+## Comparison
+
+```javascript
+console.log(undefined == null);  // true (loose equality)
+console.log(undefined === null); // false (strict equality - different types)
+```
+
+---
+
+## When to Use What
+
+```javascript
+// Don't assign undefined manually 
+let x = undefined; // Bad practice
+
+// Use null when you want to explicitly clear or indicate "no value" 
+let user = null;           // Good: explicitly no user
+let response = null;       // Good: waiting for API response
+```
+
+---
+
+## Summary
+
+- **`undefined`**: JavaScript's way of saying "I don't know what this is yet"
+- **`null`**: Your way of saying "This is intentionally empty"
+- **Best practice**: Let JavaScript handle `undefined`, you use `null` when needed
 ---
 
 ## Comments 
