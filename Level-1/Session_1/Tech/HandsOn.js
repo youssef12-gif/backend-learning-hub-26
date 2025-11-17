@@ -13,14 +13,14 @@ console.log(" Welcome to Session 1 Practice!\n");
 console.log("--- 1. Variables & Data Types ---\n");
 
 // TODO 1.1: Declare a variable called 'studentName' with YOUR name
-// let studentName = 
+
 
 // TODO 1.2: Declare a constant called 'birthYear' with your birth year
-// const birthYear = 
+
 
 // TODO 1.3: Calculate your age and store it in a variable called 'age'
 // const currentYear = 2025;
-// let age = 
+
 
 // TODO 1.4: Create a boolean variable 'isStudent' and set it to true
 // let isStudent = 
@@ -518,4 +518,5 @@ HOW TO RUN THIS FILE:
 3. Press Enter
 
 Good luck! 🚀
+
 */
