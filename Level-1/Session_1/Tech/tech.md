@@ -518,28 +518,6 @@ console.log(10 == "10");  // true [val only]
   ```javascript
   let name = "John";
   console.log(`Hello, ${name}!`); // Output: Hello, John!
----
-- Extension Retriever 
-  ```JavaScript
-  let x = "image.png"
-  // method 1 not generic 
-  let ext = x.slice(-3)
-  console.log(ext);
-  // method 2 generic 
-  ext = x.split(".")
-  const index = ext.length - 1 
-  console.log(ext[index])
-
-  ## Functions and Arrow Functions [No need for all this table to understand]
-
-| **Feature**           | **Function**                       | **Arrow Function**                  |
-|-----------------------|------------------------------------|-------------------------------------|
-| **Syntax**            | Uses the `function` keyword.       | Uses `=>` arrow syntax.             |
-| **`this` Binding**    | Dynamic (depends on how called).   | Lexical (inherits from surrounding scope). |
-| **`arguments` Object**| Available.                        | Not available; use rest parameters instead. |
-| **Constructor Support**| Yes, can be used as constructors. | No, cannot be used as constructors. |
-| **Method Suitability**| Ideal for object methods.         | Ideal for callbacks and non-method functions. |
-| **Implicit Return**   | Requires `return` for output.     | Supports implicit return for single-line expressions. |
 
 ---
 
