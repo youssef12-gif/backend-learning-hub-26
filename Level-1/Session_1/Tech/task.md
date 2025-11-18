@@ -5,6 +5,18 @@ Build a **Student Grade Calculator** that demonstrates all fundamental JavaScrip
 
 ---
 
+## 📝 Submission Guidelines
+
+1. Create a file named `task.js` in your forked repo
+2. Add clear comments explaining each section
+3. Test your code with different values
+4. Make sure all outputs are clear and formatted
+5. LLMS (chatGpt, Gemini, ...) are NOT allowed AT ALL
+6. Searching is allowed
+7. ask your assigned Supporter any time at anything
+
+---
+
 ## 🎓 Task Requirements
 
 ### Part 1: Student Information (Variables & Data Types)
@@ -188,16 +200,7 @@ Final Grade: B
 ✅ Status: PASSED
 ```
 
----
 
-## 📝 Submission Guidelines
-
-1. Create a file named `task.js` in your forked repo
-2. Add clear comments explaining each section
-3. Test your code with different values
-4. Make sure all outputs are clear and formatted
-
----
 
 ## 💡 Hints
 
