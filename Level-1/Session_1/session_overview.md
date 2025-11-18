@@ -1,6 +1,6 @@
 # 🎓 Backend Development - Session 1 Overview
 
-> **Level 1 - Phase 1**  
+> **Level 1**  
 > Introduction to Backend Development & JavaScript Fundamentals
 
 ---
@@ -157,6 +157,9 @@ The task will combine multiple concepts from this session including:
 - WhatsApp group announcement
 - GitHub repository issue
 
+**[📖 View Technical Task](./Tech/task.md)**
+**[📖 View Bounus Tech Task](./Theory/task.md)**
+
 ---
 
 ## 🎯 Learning Objectives
@@ -224,8 +227,7 @@ Before starting this session, ensure you have:
 
 ## ⚡ Quick Start
 
-**Follow instructions of how ro start and to solve and submit tasks(../../../Welcome!/How_To_Get_Started)**
-=> 
+**[Follow instructions of how to start , solve and submit tasks](../../../Welcome!/How_To_Get_Started)**
 
 ---
 
@@ -256,3 +258,4 @@ Your progress is tracked through:
 
 
 ---
+
