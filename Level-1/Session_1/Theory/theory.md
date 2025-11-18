@@ -265,6 +265,8 @@ Step by step:
 
 This theory session laid the foundation for understanding backend development. The practical work begins now!
 
+[go to Tech part](../Tech)
+
 **Get ready to**:
 - Set up your Node.js environment
 - Write your first JavaScript code
