@@ -939,6 +939,6 @@ symbole used for comments in javaScript is `// Single line` for single line and 
 # 1️⃣5️⃣ HandsOn & Task
 # **************************
 
-[HandsOn file](HandsOn.js)
+[HandsOn file](./HandsOn/HandsOn.js)
 
-[Task Description](task.md)
+[Task Description](./Task/task.md)
