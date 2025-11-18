@@ -60,9 +60,9 @@ console.log("\n--- 2. Basic Operators ---\n");
 
 // TODO 2.2: Use compound assignment operators
 // let score = 10;
-// score += 5;  // What is score now?
-// score *= 2;  // What is score now?
-// score -= 3;  // What is score now?
+// score += 5;  // What is score now? // Your Answer = 
+// score *= 2;  // What is score now? // Your Answer = 
+// score -= 3;  // What is score now? // Your Answer = 
 // console.log("Final score:", score);
 
 // CHALLENGE 2: Calculate the area of a circle (πr²)
@@ -79,11 +79,11 @@ console.log("\n--- 2. Basic Operators ---\n");
 console.log("\n--- 3. Operator Precedence ---\n");
 
 // TODO 3.1: Predict the output before running!
-// let result1 = 10 + 5 * 2;
-// console.log("Result 1:", result1); // What do you expect?
+// let result1 = 10 + 5 * 2; // What do you expect? // Your Answer = 
+// console.log("Result 1:", result1); 
 
 // TODO 3.2: Use parentheses to change the order
-// let result2 = 10 + 5 * 2;
+// let result2 = 10 + 5 * 2; // What do you expect? // Your Answer = 
 // console.log("Result 2:", result2);
 
 // CHALLENGE 3: Calculate the average of three numbers
@@ -120,15 +120,15 @@ console.log("\n--- 4. If/Else Statements ---\n");
 // A: 90+, B: 80-89, C: 70-79, D: 60-69, F: <60
 // let examScore = 85;
 // if () {
-//   console.log("Grade: A");
+//   
 // } else if () {
-//   console.log("Grade: B");
+//   
 // } else if () {
-//   console.log("Grade: C");
+//   
 // } else if () {
-//   console.log("Grade: D");
+//   
 // } else {
-//   console.log("Grade: F");
+//   
 // }
 
 
@@ -141,19 +141,19 @@ console.log("\n--- 5. Type Conversion & Coercion ---\n");
 // TODO 5.1: Convert strings to numbers
 // let strNum1 = "25";
 // let strNum2 = "10";
-// let convertedSum =strNum1 + strNum2;
+// let convertedSum = 
 // console.log("Converted sum:", convertedSum);
 
 // TODO 5.2: See type coercion in action
-// console.log("5" + 5);     // What happens?
-// console.log("10" - 5);    // What happens?
-// console.log("10" * "2");  // What happens?
+// console.log("5" + 5);     // What happens? // Your Answer = 
+// console.log("10" - 5);    // What happens? // Your Answer = 
+// console.log("10" * "2");  // What happens? // Your Answer = 
 
 // CHALLENGE 5: Fix this calculation bug
 // let userInput1 = "100";
 // let userInput2 = "50";
 // let total = userInput1 + userInput2; // This gives "10050" instead of 150
-// Fix it:
+//Fix it:
 // let correctTotal = 
 // console.log("Correct total:", correctTotal);
 
@@ -168,9 +168,9 @@ console.log("\n--- 6. Boolean Logic & Operators ---\n");
 // let hasLicense = true;
 // let hasInsurance = false;
 
-// console.log("Can drive legally:", hasLicense && hasInsurance);
-// console.log("Has at least one:", hasLicense || hasInsurance);
-// console.log("Doesn't have license:", !hasLicense);
+// console.log("Can drive legally:", );
+// console.log("Has at least one:", );
+// console.log("Doesn't have license:", );
 
 // TODO 6.2: Compare with == vs ===
 // console.log(10 == "10");   // What's the output?
@@ -225,8 +225,8 @@ console.log("\n--- 7. Strings & String Methods ---\n");
 // let extension1 = 
 
 // Method 2: Using split (more generic)
-// let parts = filename.split(".");
-// let extension2 = parts[parts.length - 1];
+// let parts = ;
+// let extension2 = ;
 
 // console.log("Extension:", extension2);
 
@@ -322,17 +322,17 @@ console.log("\n--- 10. Arrays ---\n");
 
 // TODO 10.1: Create and manipulate arrays
 // let fruits = ["Apple", "Banana", "Orange"];
-// console.log("Fruits:", fruits);
-// console.log("First fruit:", fruits[0]);
-// console.log("Last fruit:", fruits[fruits.length - 1]);
-// console.log("Number of fruits:", fruits.length);
+// console.log("Fruits:", );
+// console.log("First fruit:", );
+// console.log("Last fruit:",);
+// console.log("Number of fruits:", );
 
 // TODO 10.2: Modify arrays
 // fruits.push("Mango");        // Add to end
 // fruits.unshift("Strawberry"); // Add to beginning
 // console.log("After adding:", fruits);
 
-// TODO 10.3: Remove from arrays
+// Given 10.3: Remove from arrays
 // fruits.pop();    // Remove from end
 // fruits.shift();  // Remove from beginning
 // console.log("After removing:", fruits);
@@ -355,9 +355,9 @@ console.log("\n--- 11. Objects ---\n");
 //   
 // };
 
-// console.log("Student:", student);
-// console.log("Name:", student.name);
-// console.log("GPA:", student.gpa);
+// console.log("Student:", );
+// console.log("Name:", );
+// console.log("GPA:", );
 
 // TODO 11.2: Modify object properties
 //
@@ -388,9 +388,7 @@ console.log("\n--- 12. Loops ---\n");
 
 // TODO 12.2: Loop through an array
 // let colors = ["Red", "Green", "Blue", "Yellow"];
-// for (let i = 0; i < colors.length; i++) {
-//   
-// }
+// 
 
 // TODO 12.3: While loop - count down from 5
 // let countdown = 5;
@@ -409,9 +407,9 @@ console.log("\n--- 12. Loops ---\n");
 // - If divisible by 3, print "Fizz"
 // - If divisible by 5, print "Buzz"
 // - If divisible by both, print "FizzBuzz"
-// for (let i = 1; i <= 20; i++) {
+
 //   // Your code here
-// }
+
 
 
 // ============================================
