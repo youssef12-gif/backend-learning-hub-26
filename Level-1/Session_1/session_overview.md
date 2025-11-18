@@ -129,7 +129,7 @@ This session is divided into three main parts:
 - Loop control and iteration
 
 **[📖 View Full Technical Documentation](./Tech/tech.md)**
-**[📖 View Technical Hands on](./Tech/HandsOn.md)**
+**[📖 View Technical Hands on](./Tech/HandsOn.js)**
 **[📖 View Technical Task](./Tech/task.md)**
 
 ---
@@ -227,7 +227,7 @@ Before starting this session, ensure you have:
 
 ## ⚡ Quick Start
 
-**[Follow instructions of how to start , solve and submit tasks](../../../Welcome!/How_To_Get_Started)**
+**[Follow instructions of how to start , solve and submit tasks](../../Welcome!/How_To_Get_Started)**
 
 ---
 
@@ -258,4 +258,5 @@ Your progress is tracked through:
 
 
 ---
+
 
