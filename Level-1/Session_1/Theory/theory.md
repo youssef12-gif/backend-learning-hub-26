@@ -34,8 +34,8 @@ Make sure you have access to:
 - **WhatsApp Groups** - Communication and announcements
 - **GitHub** - Code repositories and assignments
 - **Discord** - Live discussions and Q&A
-- **Google Sheet** - Tracking and schedules
-- **Forms** - Attendance, Feedback, and Excuses
+- **Google Sheet** - Tracking and schedules [Sheet Link](https://docs.google.com/spreadsheets/d/1G_D9uF4rD7l2CSQBHgUtMkHDWknG9r36yYsNIEZqyqw/edit?usp=sharing)
+- **Forms** - Attendance, [Feedback](https://docs.google.com/forms/d/13sHsK2xyV4ADPDgq1Nyuh_M6aRogczu_JD_wLvn49uY/edit), and [Excuses](https://forms.gle/hf1LnQ4vy5jjR2Y78)
 
 ---
 
@@ -264,6 +264,8 @@ Step by step:
 ## 🎓 Next Steps
 
 This theory session laid the foundation for understanding backend development. The practical work begins now!
+
+[go to Tech part](../Tech)
 
 **Get ready to**:
 - Set up your Node.js environment

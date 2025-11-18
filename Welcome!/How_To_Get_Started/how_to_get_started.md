@@ -178,11 +178,11 @@ backend-learning-hub-26/
 - Required tools
 - Installation guides
 - Configuration steps
-- Setup verification
-
-**📁 Code/**
+- Setup verifications
 - Practical examples
 - Hands-on exercises
+
+**📁 Code/**
 - Cumulative project
 - Solution templates
 
@@ -203,7 +203,6 @@ cd Level-1/Session-1/Theory
 - **Take notes** - Write down key concepts
 - **Ask questions** - Note anything unclear
 
-**Time estimate:** 1-2 hours
 
 ### Step 2: Setup Required Tech 🛠️
 
@@ -216,13 +215,7 @@ cd ../Tech
 - **Configure settings**
 - **Verify everything works**
 
-**Time estimate:** 30 minutes - 1 hour
-
 ### Step 3: Study Code Examples 💻
-
-```bash
-cd ../Code
-```
 
 - **Read code examples thoroughly**
 - **Type code yourself** (don't copy-paste!)
@@ -230,7 +223,6 @@ cd ../Code
 - **Experiment with modifications**
 - **Understand every line**
 
-**Time estimate:** 2-3 hours
 
 ### Step 4: Complete Exercises ✏️
 
@@ -238,8 +230,6 @@ cd ../Code
 - **Don't look at solutions immediately**
 - **Struggle is part of learning!**
 - **Ask for help when truly stuck**
-
-**Time estimate:** 3-5 hours
 
 ### Step 5: Build the Project 🏗️
 
@@ -249,95 +239,22 @@ Each session has a cumulative project:
 - **Test your code**
 - **Commit your work**
 
-**Time estimate:** 2-4 hours
-
 ---
 
-## 📝 Working with Tasks
+## 📝 Working with Tasks and HandsOn
 
-### Creating Your Solutions Folder
+**1. fill in the files:**
+- open any HandsOn file in the session and start filling it with your answers
+- do the same with Tasks if the Task is just a requirment file or with extension (.md) then create your own Task.js file and solve the Task in it
 
-Create a personal folder for your work:
-
-```bash
-# In the repository root
-mkdir my-solutions
-cd my-solutions
-
-# Create session folders
-mkdir session-1 session-2 session-3
-# ... and so on
-```
-
-**Important:** Add `my-solutions/` to `.gitignore` if you don't want to commit it.
-
-### Folder Structure for Your Work
-
-```
-my-solutions/
-├── session-1/
-│   ├── exercises/
-│   │   ├── exercise-1.js
-│   │   ├── exercise-2.js
-│   │   └── ...
-│   ├── project/
-│   │   ├── index.js
-│   │   ├── package.json
-│   │   └── ...
-│   └── notes.md          ← Your personal notes
-├── session-2/
-└── ...
-```
-
-### Working on Exercises
-
-**1. Read the exercise requirements carefully**
-
-**2. Create a new file:**
-```bash
-cd my-solutions/session-1/exercises
-touch exercise-1.js  # or create in VS Code
-```
-
-**3. Write your solution:**
-- Start with comments explaining your approach
-- Write code step by step
-- Test frequently
-- Debug errors
-
-**4. Test your solution:**
-```bash
-node exercise-1.js
-```
-
-**5. Compare with provided solutions:**
+**2. Compare with provided solutions:**
 - Only after completing your attempt
 - Learn from different approaches
 - Understand why solutions work
 
 ### Working on Projects
 
-**1. Initialize the project:**
-```bash
-cd my-solutions/session-1/project
-npm init -y
-```
-
-**2. Install dependencies:**
-```bash
-npm install [required-packages]
-```
-
-**3. Build incrementally:**
-- Start with basic structure
-- Add features one by one
-- Test after each addition
-- Commit working code
-
-**4. Document your code:**
-- Add comments
-- Create README for your project
-- Explain your decisions
+* to be announced soon
 
 ---
 
@@ -353,7 +270,7 @@ git status
 **2. Add your changes:**
 ```bash
 # Add specific files
-git add my-solutions/session-1/
+git add session-1/HandsOn
 
 # Or add everything
 git add .
@@ -361,7 +278,7 @@ git add .
 
 **3. Commit with a meaningful message:**
 ```bash
-git commit -m "Complete Session 1: JavaScript & TypeScript basics
+git commit -m "Complete Session 1: JavaScript & TypeScript basics"
 
 - Completed all theory readings
 - Finished 8/8 exercises
@@ -374,7 +291,7 @@ git commit -m "Complete Session 1: JavaScript & TypeScript basics
 git push origin main
 ```
 
-### Sharing Your Work (Optional)
+### Sharing Your Work 
 
 **Want feedback from instructors?**
 
@@ -537,7 +454,6 @@ Before moving to Session 1:
 - [ ] Repository forked and cloned
 - [ ] Git configured with your details
 - [ ] VS Code extensions installed
-- [ ] Created `my-solutions/` folder
 - [ ] Read this entire guide
 - [ ] Ready to learn! 💪
 
@@ -589,11 +505,11 @@ Before moving to Session 1:
 
 **Let's do this! 🚀**
 
-[← Back to Main README](../README.md) | [Start Session 1 →](../Level-1/Session-1/README.md)
+[← Back to Main README](../../README.md) | [Start Session 1 →](../../Level-1/Session_1)
 
 </div>
 
 ---
 
-**Last Updated:** [8/11/2025]
+**Last Updated:** [18/11/2025]
 **Version:** 1.0
