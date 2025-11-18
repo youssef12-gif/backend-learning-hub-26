@@ -217,10 +217,6 @@ cd ../Tech
 
 ### Step 3: Study Code Examples 💻
 
-```bash
-cd ../Code
-```
-
 - **Read code examples thoroughly**
 - **Type code yourself** (don't copy-paste!)
 - **Run each example**
