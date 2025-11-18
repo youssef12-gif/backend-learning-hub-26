@@ -63,7 +63,8 @@ This session is divided into three main parts:
 - How browsers execute JavaScript
 - Why JavaScript is sent as text (not machine code)
 
-**[📖 View Full Theory Documentation](./theory-readme.md)**
+**[📖 View Full Theory Documentation](./Theory/theory.md)**
+**[📖 View Bounus Tech Task](./Theory/task.md)**
 
 ---
 
@@ -127,7 +128,9 @@ This session is divided into three main parts:
 - While loops
 - Loop control and iteration
 
-**[📖 View Full Technical Documentation](./README.md)**
+**[📖 View Full Technical Documentation](./Tech/tech.md)**
+**[📖 View Technical Hands on](./Tech/HandsOn.md)**
+**[📖 View Technical Task](./Tech/task.md)**
 
 ---
 
@@ -179,11 +182,12 @@ session-1/
 ├── Theory          # Theory concepts and explanations
 |   ├── task.md            # theory part task
 │   ├── theory.md           # readme
-│   └── Theory.pptx           # slides       
+│   └── Theory.pdf           # slides       
 ├── tech/
-│   ├── tech.md          
-└── task/
-    ├── task-description.md  # Task requirements (TBA)
+│   ├── tech.md
+|   ├── HandsOn.md
+|   ├── task.md      
+└── session_overiew.md
 ```
 
 ---
@@ -220,28 +224,8 @@ Before starting this session, ensure you have:
 
 ## ⚡ Quick Start
 
-1. **Fork & Clone the repository:**
-
-    Fork the repo to ypur account then clone it
-   ```bash
-   git clone <repository-url>
-   cd session-1
-   ```
-
-2. **Install Node.js** (if not already installed):
-   - Download from [nodejs.org](https://nodejs.org/)
-   - Verify installation: `node --version`
-
-3. **Run your first JavaScript file:**
-   ```bash
-   node filename.js
-   ```
-
-4. **Start learning:**
-   - Read the theory documentation
-   - Follow along with technical examples
-   - Complete practice exercises
-   - Attempt the session task
+**Follow instructions of how ro start and to solve and submit tasks(../../../Welcome!/How_To_Get_Started)**
+=> 
 
 ---
 
@@ -269,5 +253,6 @@ Your progress is tracked through:
 
 
 **Remember:** Backend engineering is about being patient, analytical, and solution-oriented. This is just the beginning of your journey. Stay curious, keep coding, and don't hesitate to ask questions!
+
 
 ---
