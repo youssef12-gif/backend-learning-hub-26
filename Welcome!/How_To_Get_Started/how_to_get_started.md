@@ -509,11 +509,11 @@ Before moving to Session 1:
 
 **Let's do this! 🚀**
 
-[← Back to Main README](backend-learning-hub-26/README.md) | [Start Session 1 →](backend-learning-hub-26/Level-1/Session-1)
+[← Back to Main README](../../README.md) | [Start Session 1 →](../../Level-1/Session-1)
 
 </div>
 
 ---
 
-**Last Updated:** [8/11/2025]
+**Last Updated:** [18/11/2025]
 **Version:** 1.0
