@@ -481,6 +481,7 @@ TIPS FOR SUCCESS:
 3. Experiment! Change values and see what happens
 4. Use console.log() liberally to debug
 5. If stuck, review the README.md or ask on Discord
+6. searching is valid
 
 COMMON MISTAKES TO AVOID:
 - Forgetting semicolons (not required but good practice)
@@ -495,7 +496,7 @@ KEYBOARD SHORTCUTS:
 
 HOW TO RUN THIS FILE:
 1. Open terminal in the file's directory
-2. Type: node practice.js
+2. Type: node HandsOn.js
 3. Press Enter
 
 Good luck! 🚀
