@@ -129,8 +129,8 @@ This session is divided into three main parts:
 - Loop control and iteration
 
 **[📖 View Full Technical Documentation](./Tech/tech.md)**
-**[📖 View Technical Hands on](./Tech/HandsOn.js)**
-**[📖 View Technical Task](./Tech/task.md)**
+**[📖 View Technical Hands on](./Tech/HandsOn/HandsOn.js)**
+**[📖 View Technical Task](./Tech/Task/task.md)**
 
 ---
 
@@ -157,7 +157,7 @@ The task will combine multiple concepts from this session including:
 - WhatsApp group announcement
 - GitHub repository issue
 
-**[📖 View Technical Task](./Tech/task.md)**
+**[📖 View Technical Task](./Tech/Task/task.md)**
 **[📖 View Bounus Tech Task](./Theory/task.md)**
 
 ---
