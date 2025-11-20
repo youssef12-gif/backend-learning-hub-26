@@ -95,7 +95,7 @@ https://github.com/OSC-Backend-Committee/backend-learning-hub-26
 
 **3. Wait for GitHub to create your fork**
 - You'll be redirected to your forked repository
-- The URL will be: `https://github.com/YOUR-USERNAME/backend-learning-hub-26`
+- The URL will be: [https://github.com/Open-Source-Community/backend-learning-hub-26.git](https://github.com/Open-Source-Community/backend-learning-hub-26.git)
 
 **4. Clone your forked repository to your computer:**
 
@@ -113,7 +113,7 @@ cd backend-learning-hub-26
 ls  # You should see the repository folders
 ```
 
-### Keep Your Fork Updated
+### Keep Your Fork Updated 
 
 To get the latest content from the original repository:
 
@@ -132,6 +132,8 @@ git push origin main
 ```
 
 **Do this weekly** to get new sessions and updates!
+
+### or you can just click sync in Your Forked Repo in Github
 
 ---
 
@@ -296,7 +298,7 @@ git push origin main
 **Want feedback from instructors?**
 
 * **Create an issue on the original repo:**
-   - Go to: `https://github.com/OSC-Backend-Committee/backend-learning-hub-26/issues`
+   - Go to: [https://github.com/Open-Source-Community/backend-learning-hub-26.git](https://github.com/Open-Source-Community/backend-learning-hub-26.git)
    - Click "New Issue"
    - Title: "Session [X] Submission - [Your Name]"
    - Include:
@@ -304,6 +306,7 @@ git push origin main
      - Specific questions
      - What you found challenging
      - What you learned
+* **Don't Forget to make the Repo Private From the Settings Then Invite The Istructors**
 
 ---
 
