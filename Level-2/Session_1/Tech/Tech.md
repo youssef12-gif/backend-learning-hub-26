@@ -12,7 +12,6 @@
 8. [Configuration with tsconfig.json](#8️⃣-configuration-with-tsconfigjson)
 9. [TSC Watch Mode](#9️⃣-tsc-watch-mode)
 10. [Runtime Compatibility](#-runtime-compatibility)
-11. [Hands-On Practice](#1️⃣1️⃣-hands-on-practice)
 
 ---
 
@@ -997,108 +996,6 @@ node -p "process.versions"
     "lib": ["ES5", "DOM"]
   }
 }
-```
-
----
-
-# 1️⃣1️⃣ Hands-On Practice
-
-## Exercise 1: Basic Types
-
-Create a file `basic-types.ts`:
-
-```typescript
-// TODO: Add type annotations
-let username = "Alice";
-let userAge = 25;
-let isActive = true;
-
-// TODO: Fix this function with proper types
-function calculateArea(length, width) {
-  return length * width;
-}
-
-// TODO: What's wrong with this?
-let result = calculateArea(5, "10");
-console.log(result);
-```
-
-## Exercise 2: Interfaces
-
-Create a file `interfaces.ts`:
-
-```typescript
-// TODO: Create a Member interface with:
-// - name (string)
-// - age (number)
-// - committee (string)
-// - optional: email (string)
-
-// TODO: Create a member object using the interface
-
-// TODO: Create a function that takes a Member and prints their info
-```
-
-## Exercise 3: Union Types
-
-Create a file `unions.ts`:
-
-```typescript
-// TODO: Create a function that accepts string OR number
-// If string: return length
-// If number: return squared value
-
-// TODO: Test with both types
-```
-
-## Exercise 4: Generics
-
-Create a file `generics.ts`:
-
-```typescript
-// TODO: Create a generic function that returns the first element of any array
-
-// TODO: Test with number array
-// TODO: Test with string array
-```
-
-## Exercise 5: Real-World Example
-
-Create a file `user-management.ts`:
-
-```typescript
-// TODO: Create a User interface
-interface User {
-  // id, name, email, age, role
-}
-
-// TODO: Create a function to create a new user
-
-// TODO: Create a function to update user (use Partial<User>)
-
-// TODO: Create a function to filter users by role
-```
-
-## Compilation Practice
-
-```bash
-# 1. Initialize TypeScript project
-tsc --init
-
-# 2. Modify tsconfig.json:
-#    - Set target to ES2020
-#    - Set outDir to ./dist
-#    - Set rootDir to ./src
-#    - Enable strict mode
-
-# 3. Compile all files
-tsc
-
-# 4. Run compiled JavaScript
-node dist/basic-types.js
-
-# 5. Try watch mode
-tsc --watch
 ```
 
 ---
