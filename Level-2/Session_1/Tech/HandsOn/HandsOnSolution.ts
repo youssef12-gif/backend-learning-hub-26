@@ -32,6 +32,3 @@ function updateUserTS(user: User, updates: Partial<User>): User {
 function getUsersByRoleTS(users: User[], role: Role): User[] {
 	return users.filter((user) => user.role === role);
 }
-
-
-
