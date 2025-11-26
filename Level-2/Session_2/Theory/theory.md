@@ -44,8 +44,6 @@ As projects grow, Express applications often face several challenges:
 -   ❌ **Manual dependency management** → Hard to test
 -   ❌ **Mixing concerns** → Business logic in route handlers
 
-> [!NOTE]
-> See [tech.md](tech.md#1-express-vs-nestjs-implementation) for a code comparison between a "messy" Express app and a structured NestJS app.
 
 ### Why NestJS Was Created
 
@@ -130,8 +128,6 @@ NestJS can run on top of Express (default) or Fastify, allowing you to switch un
 2.  **Method Decorators**: Define HTTP methods (Get, Post) for functions.
 3.  **Parameter Decorators**: Extract data from the request (Body, Param, Query).
 
-> [!NOTE]
-> See [tech.md](tech.md#3-decorators-deep-dive) for a comprehensive list of decorators and syntax examples.
 
 ### Why Decorators Matter
 
@@ -155,16 +151,12 @@ NestJS can run on top of Express (default) or Fastify, allowing you to switch un
 **Responsibility:** Handle HTTP requests and responses ONLY.
 **Should NOT:** Contain business logic, make database queries, or perform calculations.
 
-> [!TIP]
-> See [tech.md](tech.md#4-separation-of-concerns-implementation) for a clean Controller implementation.
 
 ### Services: Business Logic Layer
 
 **Responsibility:** Implement business rules and logic.
 **The @Injectable() Decorator:** Marks a class as managed by the NestJS container.
 
-> [!TIP]
-> See [tech.md](tech.md#4-separation-of-concerns-implementation) for a Service implementation.
 
 ---
 
@@ -180,8 +172,6 @@ NestJS can run on top of Express (default) or Fastify, allowing you to switch un
 -   **Shared Modules**: Share services (like DatabaseService) across the application.
 -   **Global Modules**: Available everywhere without importing (e.g., LoggerModule).
 
-> [!NOTE]
-> See [tech.md](tech.md#5-module-architecture) for examples of Feature, Root, and Shared modules.
 
 ---
 
@@ -202,8 +192,6 @@ NestJS can run on top of Express (default) or Fastify, allowing you to switch un
 1.  **Functional Middleware**: Simple functions.
 2.  **Class-based Middleware**: Classes that can inject dependencies.
 
-> [!TIP]
-> See [tech.md](tech.md#6-middleware-implementation) for implementation details of both types.
 
 ### Execution Order
 
@@ -228,8 +216,6 @@ Request → Middleware → Guards → Interceptors (Before) → Pipes → Contro
 -   **AuthGuard**: Checks if a user is logged in.
 -   **RolesGuard**: Checks if a user has the required permission.
 
-> [!NOTE]
-> See [tech.md](tech.md#7-guards-implementation) for code examples of Auth and Role guards.
 
 ---
 
