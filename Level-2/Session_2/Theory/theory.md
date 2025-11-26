@@ -96,9 +96,6 @@ NestJS solves these problems by providing:
 
 NestJS is built with and for TypeScript, catching errors at compile-time rather than runtime.
 
-> [!TIP]
-> See [tech.md](tech.md#2-typescript--dependency-injection) for examples of how TypeScript prevents errors.
-
 #### 2. Dependency Injection
 
 The framework manages dependencies for you, making code cleaner and easier to test.
