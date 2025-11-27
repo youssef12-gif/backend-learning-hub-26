@@ -14,7 +14,7 @@ By the end of this session, you will:
 
 ## 🗂️ Table of Contents
 
-1. [The Evolution & Why NestJS](#1-the-evolution--why-nestjs)
+1. [What is NestJS & Why it Was Created](#1-What-is-NestJS-&-Why-it-Was-Created)
 2. [Node.js vs Express vs NestJS](#2-nodejs-vs-express-vs-nestjs)
 3. [NestJS Philosophy](#3-nestjs-philosophy)
 4. [Understanding Decorators](#4-understanding-decorators)
@@ -22,6 +22,8 @@ By the end of this session, you will:
 6. [Module System Architecture](#6-module-system-architecture)
 7. [Middleware](#7-middleware)
 8. [Guards](#8-guards)
+9. [Pips](#9-Pips)
+10. [Interceptors](#10-Interceptors)
 
 ---
 
@@ -45,7 +47,8 @@ As projects grow, Express applications often face several challenges:
 -   ❌ **Mixing concerns** → Business logic in route handlers
 
 
-### Why NestJS Was Created
+### What is NestJS & Why it Was Created?
+a progressive opinionated Node.js framework for building efficient, scalable, and reliable server-side applications using TypeScript or JavaScript
 
 NestJS solves these problems by providing:
 
@@ -139,10 +142,13 @@ NestJS can run on top of Express (default) or Fastify, allowing you to switch un
 ---
 
 ## 5. Separation of Concerns
+Separation of Concerns is a software design principle that says:
+“Each part of your application should have a single, well-defined responsibility.”
+Instead of mixing everything together, you split your code into layers, so each layer only does one thing.
+This makes your code: Clean, Maintainable, Testable, and  Scalable .
+### The Three core Layers
 
-### The Three Layers
-
-1.  **Controllers**: HTTP concerns only. Handle requests and send responses.
+1.  **Controllers**: HTTP concerns only. Handle requests and send responses(calls the service).
 2.  **Services/Providers**: Business logic. Where the actual work happens.
 3.  **Data Access**: Database operations.
 
@@ -164,7 +170,7 @@ NestJS can run on top of Express (default) or Fastify, allowing you to switch un
 
 ### What Are Modules?
 
-**Definition:** Organize related components (controllers, services) into cohesive blocks. Every NestJS application has at least one module (the root module).
+**Definition:** Groups related components (controllers, services) into cohesive blocks. Every NestJS application has at least one module called the root module (contains all other modules).
 
 ### Module Relationships
 
@@ -192,11 +198,6 @@ NestJS can run on top of Express (default) or Fastify, allowing you to switch un
 1.  **Functional Middleware**: Simple functions.
 2.  **Class-based Middleware**: Classes that can inject dependencies.
 
-
-### Execution Order
-
-Request → Middleware → Guards → Interceptors (Before) → Pipes → Controller → Interceptors (After) → Response
-
 ---
 
 ## 8. Guards
@@ -216,6 +217,33 @@ Request → Middleware → Guards → Interceptors (Before) → Pipes → Contro
 -   **AuthGuard**: Checks if a user is logged in.
 -   **RolesGuard**: Checks if a user has the required permission.
 
+## 9.Pips
+
+### What are Pips?
+
+Its job is to process incoming data before it reaches the controller.
+
+**Key points:**
+
+ **validate**, transform, or sanitize request data.
+Keeps controllers clean, because all input processing is handled here.
+
+## 10. Interceptors
+
+**What are Interceptors?**
+
+An Interceptor is a class that wraps around a controller method. Can run before and after the controller executes.
+
+**Key points:**
+
+Can log requests, measure execution time, cache responses, or transform output.
+Can inject other services/providers using DI.
+
+
+
+### Execution Order
+
+Request → Middleware → Guards → Interceptors (Before) → Pipes → Controller → Interceptors (After) → Service → response
 
 ---
 
