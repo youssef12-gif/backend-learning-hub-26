@@ -8,22 +8,18 @@ console.log("EXERCISE 1: CORE TYPESCRIPT FEATURES");
 console.log("=".repeat(60));
 
 // Solution for Exercise 1
-function createUser(
-	name: string,
-	age: number,
-	isActive: boolean
-): {
-	name: string;
-	age: number;
-	isActive: boolean;
-	greeting: string;
+function createUser(name: string, age: number, isActive: boolean): {
+    name: string;
+    age: number;
+    isActive: boolean;
+    greeting: string;
 } {
-	return {
-		name: name,
-		age: age,
-		isActive: isActive,
-		greeting: `Welcome, ${name}!`,
-	};
+    return {
+        name: name,
+        age: age,
+        isActive: isActive,
+        greeting: `Welcome, ${name}!`
+    };
 }
 
 // Test the function
@@ -33,23 +29,19 @@ console.log();
 
 // Alternative with interface
 interface UserResult {
-	name: string;
-	age: number;
-	isActive: boolean;
-	greeting: string;
+    name: string;
+    age: number;
+    isActive: boolean;
+    greeting: string;
 }
 
-function createUserWithInterface(
-	name: string,
-	age: number,
-	isActive: boolean
-): UserResult {
-	return {
-		name,
-		age,
-		isActive,
-		greeting: `Welcome, ${name}!`,
-	};
+function createUserWithInterface(name: string, age: number, isActive: boolean): UserResult {
+    return {
+        name,
+        age,
+        isActive,
+        greeting: `Welcome, ${name}!`
+    };
 }
 
 const user2 = createUserWithInterface("Bob", 30, false);
@@ -66,10 +58,7 @@ let productName: string = "Laptop";
 let price: number = 999.99;
 let inStock: boolean = true;
 let tags: string[] = ["electronics", "computers", "new"];
-let metadata: { weight: number; color: string } = {
-	weight: 2.5,
-	color: "silver",
-};
+let metadata: { weight: number; color: string } = { weight: 2.5, color: "silver" };
 
 console.log("Product:", productName);
 console.log("Price:", price);
@@ -80,7 +69,7 @@ console.log();
 
 // Tax calculator function
 function calculateTotal(price: number, taxRate: number): number {
-	return price + price * taxRate;
+    return price + (price * taxRate);
 }
 
 const totalWithTax = calculateTotal(100, 0.15);
@@ -112,10 +101,7 @@ let inferredObject = { name: "Alice", age: 30 }; // Type: { name: string; age: n
 console.log("Inferred types:");
 console.log("- inferredString:", typeof inferredString);
 console.log("- inferredNumber:", typeof inferredNumber);
-console.log(
-	"- inferredArray:",
-	Array.isArray(inferredArray) ? "array" : typeof inferredArray
-);
+console.log("- inferredArray:", Array.isArray(inferredArray) ? "array" : typeof inferredArray);
 console.log("- inferredObject:", typeof inferredObject);
 console.log();
 
@@ -124,7 +110,7 @@ console.log();
 
 // Function return type inference
 function multiply(a: number, b: number) {
-	return a * b; // Return type inferred as: number
+    return a * b; // Return type inferred as: number
 }
 
 const result = multiply(5, 3);
@@ -138,9 +124,9 @@ const constantValue = "TypeScript"; // Type: "TypeScript" (literal type)
 // Context-based inference
 const numbers = [1, 2, 3, 4, 5];
 console.log("Squared numbers:");
-numbers.forEach((item) => {
-	// 'item' is inferred as number from array type
-	console.log(`  ${item}² = ${item * item}`);
+numbers.forEach(item => {
+    // 'item' is inferred as number from array type
+    console.log(`  ${item}² = ${item * item}`);
 });
 console.log();
 
@@ -167,7 +153,7 @@ console.log();
 
 // Bottom-up typing
 function processUser(user: { name: string; age: number }): string {
-	return `${user.name} is ${user.age} years old`;
+    return `${user.name} is ${user.age} years old`;
 }
 
 const newUser = { name: "Dina", age: 28, email: "dina@example.com" };
@@ -180,8 +166,8 @@ console.log();
 type Calculator = (a: number, b: number) => number;
 
 const add: Calculator = (x, y) => {
-	// x and y are inferred as number from Calculator type
-	return x + y;
+    // x and y are inferred as number from Calculator type
+    return x + y;
 };
 
 console.log("Add function result:", add(10, 5));
@@ -189,9 +175,9 @@ console.log();
 
 // Array methods with bidirectional checking
 const names = ["Ali", "Barthinia", "Mohsen"];
-const upperCased = names.map((name) => {
-	// 'name' is inferred as string from names array type
-	return name.toUpperCase();
+const upperCased = names.map(name => {
+    // 'name' is inferred as string from names array type
+    return name.toUpperCase();
 });
 
 console.log("Uppercase names:", upperCased);
@@ -199,12 +185,12 @@ console.log();
 
 // Promise type inference
 async function fetchData(): Promise<string> {
-	return "data from server";
+    return "data from server";
 }
 
-fetchData().then((result) => {
-	// 'result' is inferred as string from Promise<string>
-	console.log("Fetched result:", result);
+fetchData().then(result => {
+    // 'result' is inferred as string from Promise<string>
+    console.log("Fetched result:", result);
 });
 console.log();
 
@@ -217,11 +203,11 @@ console.log("=".repeat(60));
 
 // 1. Union Types
 function getItemById(id: string | number): string {
-	if (typeof id === "string") {
-		return `Item with string ID: ${id}`;
-	} else {
-		return `Item with numeric ID: ${id}`;
-	}
+    if (typeof id === "string") {
+        return `Item with string ID: ${id}`;
+    } else {
+        return `Item with numeric ID: ${id}`;
+    }
 }
 
 console.log(getItemById("ABC123"));
@@ -234,8 +220,8 @@ type HasAge = { age: number };
 type Person = HasName & HasAge;
 
 const person: Person = {
-	name: "Ahmed",
-	age: 28,
+    name: "Ahmed",
+    age: 28
 };
 
 console.log("Person:", person);
@@ -254,15 +240,15 @@ console.log();
 
 // 4. Type Aliases
 type Product = {
-	id: number;
-	name: string;
-	price: number;
+    id: number;
+    name: string;
+    price: number;
 };
 
 const product: Product = {
-	id: 1,
-	name: "Mouse",
-	price: 29.99,
+    id: 1,
+    name: "Mouse",
+    price: 29.99
 };
 
 console.log("Product:", product);
@@ -270,7 +256,7 @@ console.log();
 
 // 5. Generic function
 function getFirst<T>(arr: T[]): T | undefined {
-	return arr[0];
+    return arr[0];
 }
 
 const firstNumber = getFirst([1, 2, 3]); // number | undefined
@@ -285,23 +271,23 @@ console.log();
 // 6. Utility Types
 type PartialProduct = Partial<Product>;
 type ReadonlyProduct = Readonly<Product>;
-type ProductPreview = Pick<Product, "name" | "price">;
+type ProductPreview = Pick<Product, 'name' | 'price'>;
 
 const partialProduct: PartialProduct = {
-	name: "Keyboard", // Only name, other properties optional
+    name: "Keyboard" // Only name, other properties optional
 };
 
 const readonlyProduct: ReadonlyProduct = {
-	id: 2,
-	name: "Monitor",
-	price: 299.99,
+    id: 2,
+    name: "Monitor",
+    price: 299.99
 };
 // readonlyProduct.price = 199.99; // ❌ Error: Cannot assign to 'price' because it is a read-only property
 
 const productPreview: ProductPreview = {
-	name: "Headphones",
-	price: 79.99,
-	// id is excluded
+    name: "Headphones",
+    price: 79.99
+    // id is excluded
 };
 
 console.log("Partial product:", partialProduct);
@@ -334,18 +320,18 @@ console.log();
 
 // 2. Interface
 interface Animal {
-	name: string;
-	age: number;
+    name: string;
+    age: number;
 }
 
 interface Dog extends Animal {
-	breed: string;
+    breed: string;
 }
 
 const myDog: Dog = {
-	name: "Buddy",
-	age: 3,
-	breed: "Labrador",
+    name: "Buddy",
+    age: 3,
+    breed: "Labrador"
 };
 
 console.log("Dog:", myDog);
@@ -353,20 +339,20 @@ console.log();
 
 // 3. Class
 class Vehicle {
-	constructor(
-		public brand: string,
-		public model: string,
-		private year: number
-	) {}
-
-	getInfo(): string {
-		return `${this.brand} ${this.model} (${this.year})`;
-	}
-
-	getAge(): number {
-		const currentYear = new Date().getFullYear();
-		return currentYear - this.year;
-	}
+    constructor(
+        public brand: string,
+        public model: string,
+        private year: number
+    ) {}
+    
+    getInfo(): string {
+        return `${this.brand} ${this.model} (${this.year})`;
+    }
+    
+    getAge(): number {
+        const currentYear = new Date().getFullYear();
+        return currentYear - this.year;
+    }
 }
 
 const myCar = new Vehicle("Toyota", "Camry", 2020);
@@ -376,9 +362,9 @@ console.log();
 
 // 4. Object Literal
 const book: { title: string; author: string; pages: number } = {
-	title: "TypeScript Guide",
-	author: "Developer",
-	pages: 250,
+    title: "TypeScript Guide",
+    author: "Developer",
+    pages: 250
 };
 
 console.log("Book:", book);
@@ -387,8 +373,8 @@ console.log();
 // Combined exercise
 // 1. User interface
 interface User {
-	name: string;
-	email: string;
+    name: string;
+    email: string;
 }
 
 // 2. UserId type
@@ -396,43 +382,38 @@ type UserId = string | number;
 
 // 3. UserManager class
 class UserManager {
-	private users: Map<UserId, User> = new Map();
-
-	addUser(id: UserId, user: User): void {
-		this.users.set(id, user);
-		console.log(`✅ User added: ${user.name} (ID: ${id})`);
-	}
-
-	removeUser(id: UserId): boolean {
-		const deleted = this.users.delete(id);
-		if (deleted) {
-			console.log(`✅ User removed (ID: ${id})`);
-		} else {
-			console.log(`⚠️  User not found (ID: ${id})`);
-		}
-		return deleted;
-	}
-
-	getUser(id: UserId): User | undefined {
-		return this.users.get(id);
-	}
-
-	getAllUsers(): User[] {
-		return Array.from(this.users.values());
-	}
+    private users: Map<UserId, User> = new Map();
+    
+    addUser(id: UserId, user: User): void {
+        this.users.set(id, user);
+        console.log(`✅ User added: ${user.name} (ID: ${id})`);
+    }
+    
+    removeUser(id: UserId): boolean {
+        const deleted = this.users.delete(id);
+        if (deleted) {
+            console.log(`✅ User removed (ID: ${id})`);
+        } else {
+            console.log(`⚠️  User not found (ID: ${id})`);
+        }
+        return deleted;
+    }
+    
+    getUser(id: UserId): User | undefined {
+        return this.users.get(id);
+    }
+    
+    getAllUsers(): User[] {
+        return Array.from(this.users.values());
+    }
 }
 
 // 4. Admin object literal
-const admin: {
-	name: string;
-	email: string;
-	role: string;
-	permissions: string[];
-} = {
-	name: "Admin User",
-	email: "admin@example.com",
-	role: "administrator",
-	permissions: ["read", "write", "delete"],
+const admin: { name: string; email: string; role: string; permissions: string[] } = {
+    name: "Admin User",
+    email: "admin@example.com",
+    role: "administrator",
+    permissions: ["read", "write", "delete"]
 };
 
 console.log("Admin:", admin);
@@ -461,174 +442,169 @@ type OrderStatus = "pending" | "processing" | "shipped" | "delivered";
 
 // 2. INTERFACES
 interface ProductType {
-	id: ProductId;
-	name: string;
-	price: number;
-	currency: Currency;
-	inStock: boolean;
-	category: string;
+    id: ProductId;
+    name: string;
+    price: number;
+    currency: Currency;
+    inStock: boolean;
+    category: string;
 }
 
 interface Customer {
-	id: number;
-	name: string;
-	email: string;
-	orders: Order[];
+    id: number;
+    name: string;
+    email: string;
+    orders: Order[];
 }
 
 interface Order {
-	orderId: string;
-	customerId: number;
-	products: ProductType[];
-	status: OrderStatus;
-	total: number;
+    orderId: string;
+    customerId: number;
+    products: ProductType[];
+    status: OrderStatus;
+    total: number;
 }
 
 // 3. SHOPPING CART CLASS
 class ShoppingCart {
-	private items: ProductType[] = [];
-
-	addItem(product: ProductType): void {
-		if (!product.inStock) {
-			console.log(`❌ Cannot add "${product.name}" - out of stock`);
-			return;
-		}
-
-		const existingItem = this.items.find((item) => item.id === product.id);
-		if (existingItem) {
-			console.log(`⚠️  "${product.name}" is already in cart`);
-			return;
-		}
-
-		this.items.push(product);
-		console.log(`✅ Added "${product.name}" to cart`);
-	}
-
-	removeItem(productId: ProductId): void {
-		const initialLength = this.items.length;
-		this.items = this.items.filter((item) => item.id !== productId);
-
-		if (this.items.length < initialLength) {
-			console.log(`✅ Removed product (ID: ${productId}) from cart`);
-		} else {
-			console.log(`⚠️  Product (ID: ${productId}) not found in cart`);
-		}
-	}
-
-	calculateTotal(): number {
-		return this.items.reduce((total, item) => total + item.price, 0);
-	}
-
-	getItems(): ProductType[] {
-		return [...this.items];
-	}
-
-	checkout(customer: Customer): Order {
-		if (this.items.length === 0) {
-			throw new Error("Cannot checkout with empty cart");
-		}
-
-		const order: Order = {
-			orderId: this.generateOrderId(),
-			customerId: customer.id,
-			products: [...this.items],
-			status: "pending",
-			total: this.calculateTotal(),
-		};
-
-		customer.orders.push(order);
-		this.items = [];
-
-		console.log(
-			`✅ Order created successfully! Order ID: ${order.orderId}`
-		);
-		return order;
-	}
-
-	private generateOrderId(): string {
-		return `ORD-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
-	}
+    private items: ProductType[] = [];
+    
+    addItem(product: ProductType): void {
+        if (!product.inStock) {
+            console.log(`❌ Cannot add "${product.name}" - out of stock`);
+            return;
+        }
+        
+        const existingItem = this.items.find(item => item.id === product.id);
+        if (existingItem) {
+            console.log(`⚠️  "${product.name}" is already in cart`);
+            return;
+        }
+        
+        this.items.push(product);
+        console.log(`✅ Added "${product.name}" to cart`);
+    }
+    
+    removeItem(productId: ProductId): void {
+        const initialLength = this.items.length;
+        this.items = this.items.filter(item => item.id !== productId);
+        
+        if (this.items.length < initialLength) {
+            console.log(`✅ Removed product (ID: ${productId}) from cart`);
+        } else {
+            console.log(`⚠️  Product (ID: ${productId}) not found in cart`);
+        }
+    }
+    
+    calculateTotal(): number {
+        return this.items.reduce((total, item) => total + item.price, 0);
+    }
+    
+    getItems(): ProductType[] {
+        return [...this.items];
+    }
+    
+    checkout(customer: Customer): Order {
+        if (this.items.length === 0) {
+            throw new Error("Cannot checkout with empty cart");
+        }
+        
+        const order: Order = {
+            orderId: this.generateOrderId(),
+            customerId: customer.id,
+            products: [...this.items],
+            status: "pending",
+            total: this.calculateTotal()
+        };
+        
+        customer.orders.push(order);
+        this.items = [];
+        
+        console.log(`✅ Order created successfully! Order ID: ${order.orderId}`);
+        return order;
+    }
+    
+    private generateOrderId(): string {
+        return `ORD-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+    }
 }
 
 // 4. GENERIC REPOSITORY CLASS
 class Repository<T extends { id: ProductId }> {
-	private items: T[] = [];
-
-	add(item: T): void {
-		const existingItem = this.items.find((i) => i.id === item.id);
-		if (existingItem) {
-			console.log(`⚠️  Item with ID ${item.id} already exists`);
-			return;
-		}
-
-		this.items.push(item);
-		console.log(`✅ Item added to repository (ID: ${item.id})`);
-	}
-
-	findById(id: ProductId): T | undefined {
-		return this.items.find((item) => item.id === id);
-	}
-
-	getAll(): T[] {
-		return [...this.items];
-	}
-
-	update(id: ProductId, updates: Partial<T>): boolean {
-		const itemIndex = this.items.findIndex((item) => item.id === id);
-
-		if (itemIndex === -1) {
-			console.log(`⚠️  Item with ID ${id} not found`);
-			return false;
-		}
-
-		this.items[itemIndex] = {
-			...this.items[itemIndex],
-			...updates,
-		};
-
-		console.log(`✅ Item updated (ID: ${id})`);
-		return true;
-	}
+    private items: T[] = [];
+    
+    add(item: T): void {
+        const existingItem = this.items.find(i => i.id === item.id);
+        if (existingItem) {
+            console.log(`⚠️  Item with ID ${item.id} already exists`);
+            return;
+        }
+        
+        this.items.push(item);
+        console.log(`✅ Item added to repository (ID: ${item.id})`);
+    }
+    
+    findById(id: ProductId): T | undefined {
+        return this.items.find(item => item.id === id);
+    }
+    
+    getAll(): T[] {
+        return [...this.items];
+    }
+    
+    update(id: ProductId, updates: Partial<T>): boolean {
+        const itemIndex = this.items.findIndex(item => item.id === id);
+        
+        if (itemIndex === -1) {
+            console.log(`⚠️  Item with ID ${id} not found`);
+            return false;
+        }
+        
+        this.items[itemIndex] = {
+            ...this.items[itemIndex],
+            ...updates
+        };
+        
+        console.log(`✅ Item updated (ID: ${id})`);
+        return true;
+    }
 }
 
 // 5. UTILITY FUNCTIONS
-function filterByCategory(
-	products: ProductType[],
-	category: string
-): ProductType[] {
-	return products.filter(
-		(product) => product.category.toLowerCase() === category.toLowerCase()
-	);
+function filterByCategory(products: ProductType[], category: string): ProductType[] {
+    return products.filter(
+        product => product.category.toLowerCase() === category.toLowerCase()
+    );
 }
 
 function convertCurrency(amount: number, from: Currency, to: Currency): number {
-	if (from === to) return amount;
-
-	const rates: Record<Currency, number> = {
-		USD: 1.0,
-		EUR: 0.85,
-		GBP: 0.73,
-	};
-
-	const inUSD = amount / rates[from];
-	const converted = inUSD * rates[to];
-
-	return Math.round(converted * 100) / 100;
+    if (from === to) return amount;
+    
+    const rates: Record<Currency, number> = {
+        USD: 1.0,
+        EUR: 0.85,
+        GBP: 0.73
+    };
+    
+    const inUSD = amount / rates[from];
+    const converted = inUSD * rates[to];
+    
+    return Math.round(converted * 100) / 100;
 }
 
 function isProduct(obj: any): obj is ProductType {
-	return (
-		typeof obj === "object" &&
-		obj !== null &&
-		"id" in obj &&
-		(typeof obj.id === "string" || typeof obj.id === "number") &&
-		typeof obj.name === "string" &&
-		typeof obj.price === "number" &&
-		typeof obj.currency === "string" &&
-		["USD", "EUR", "GBP"].includes(obj.currency) &&
-		typeof obj.inStock === "boolean" &&
-		typeof obj.category === "string"
-	);
+    return (
+        typeof obj === 'object' &&
+        obj !== null &&
+        ('id' in obj) &&
+        (typeof obj.id === 'string' || typeof obj.id === 'number') &&
+        typeof obj.name === 'string' &&
+        typeof obj.price === 'number' &&
+        typeof obj.currency === 'string' &&
+        ['USD', 'EUR', 'GBP'].includes(obj.currency) &&
+        typeof obj.inStock === 'boolean' &&
+        typeof obj.category === 'string'
+    );
 }
 
 // 6. TESTING
@@ -636,37 +612,37 @@ const productRepo = new Repository<ProductType>();
 const cart = new ShoppingCart();
 
 const laptop: ProductType = {
-	id: 1,
-	name: "Gaming Laptop",
-	price: 1299.99,
-	currency: "USD",
-	inStock: true,
-	category: "Electronics",
+    id: 1,
+    name: "Gaming Laptop",
+    price: 1299.99,
+    currency: "USD",
+    inStock: true,
+    category: "Electronics"
 };
 
 const mouse: ProductType = {
-	id: 2,
-	name: "Wireless Mouse",
-	price: 29.99,
-	currency: "USD",
-	inStock: true,
-	category: "Accessories",
+    id: 2,
+    name: "Wireless Mouse",
+    price: 29.99,
+    currency: "USD",
+    inStock: true,
+    category: "Accessories"
 };
 
 const keyboard: ProductType = {
-	id: 3,
-	name: "Mechanical Keyboard",
-	price: 89.99,
-	currency: "USD",
-	inStock: false,
-	category: "Accessories",
+    id: 3,
+    name: "Mechanical Keyboard",
+    price: 89.99,
+    currency: "USD",
+    inStock: false,
+    category: "Accessories"
 };
 
 const customer: Customer = {
-	id: 1,
-	name: "John Doe",
-	email: "john@example.com",
-	orders: [],
+    id: 1,
+    name: "John Doe",
+    email: "john@example.com",
+    orders: []
 };
 
 // Test repository
