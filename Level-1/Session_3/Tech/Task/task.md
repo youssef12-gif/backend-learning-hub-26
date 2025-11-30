@@ -14,7 +14,8 @@ Build a Simple Weather Data Fetcher that demonstrates:
 ---
 
 # 📝 Submission Guidelines
-- Create a file named asyncTask.js  
+- Create a file named asyncTask.ts 
+- Make sure to make it Type safe Using Typescript 
 - Add clear comments  
 - Test your code  
 - Output should be formatted  
