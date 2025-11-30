@@ -1,19 +1,14 @@
-# Session 3: Asynchronous JavaScript & Node.js Fundamentals
+# Session 3: Asynchronous JavaScript & Node.js Runtime
 
 ## 📋 Session Agenda
 
-**Part 1: Asynchronous JavaScript Patterns**
+**Asynchronous JavaScript & Node.js Fundamentals**
 1. Why Asynchronous Programming? 
 2. Callbacks 
 3. Timers: setTimeout & setInterval 
 4. Promises 
-5. Async/Await 
-
-
-**Part 2: Node.js Fundamentals**
-1. Node.js Runtime Deep Dive 
-2. File System Operations 
-3. Path & Environment
+5. Async/Await
+6. Node.js Runtime Deep Dive 
 
 ---
 
@@ -27,12 +22,10 @@ By the end of this session, you will be able to:
 4. Use Promises to handle async operations
 5. Write clean async code with async/await
 6. Understand how Node.js runtime works (Event Loop)
-7. Perform file system operations
-8. Work with paths and environment variables
 
 ---
 
-# Part 1: Asynchronous JavaScript Patterns
+# Asynchronous JavaScript Patterns
 
 ## 1️⃣ Why Asynchronous Programming?
 
@@ -42,9 +35,9 @@ Imagine you're cooking dinner:
 
 **Synchronous Approach (Blocking):**
 ```
-1. Put water on stove → WAIT until it boils 
-2. Cut vegetables → WAIT until done
-3. Cook rice → WAIT until done 
+1. Put water on stove → WAIT until it boils (10 min)
+2. Cut vegetables → WAIT until done (5 min)
+3. Cook rice → WAIT until done (20 min)
 Total: 35 minutes of standing around!
 ```
 
@@ -61,36 +54,52 @@ Total: 20 minutes, everything done in parallel!
 **Synchronous (Blocking):**
 ```typescript
 // This blocks everything until done
-function processFile() {
-  console.log("Start reading file...");
-  const data = readFileSync("large-file.txt"); // WAIT HERE
-  console.log("File read complete!");
-  console.log("Do other work");
+function heavyComputation() {
+  console.log("Start computation...");
+  
+  // Simulate heavy work that blocks
+  let result = 0;
+  for (let i = 0; i < 1000000000; i++) {
+    result += i;
+  }
+  
+  console.log("Computation complete!");
+  return result;
 }
 
+console.log("Before");
+heavyComputation(); // BLOCKS HERE - nothing else can run
+console.log("After");
+
 // Output:
-// Start reading file...
+// Before
+// Start computation...
 // [5 seconds pass... nothing else can happen]
-// File read complete!
-// Do other work
+// Computation complete!
+// After
 ```
 
 **Asynchronous (Non-blocking):**
 ```typescript
 // This doesn't block, code continues
-function processFile() {
-  console.log("Start reading file...");
-  readFileAsync("large-file.txt", (data) => {
-    console.log("File read complete!");
-  });
-  console.log("Do other work");
+function heavyComputationAsync() {
+  console.log("Start computation...");
+  
+  setTimeout(() => {
+    console.log("Computation complete!");
+  }, 2000);
 }
 
+console.log("Before");
+heavyComputationAsync(); // Doesn't block!
+console.log("After");
+
 // Output:
-// Start reading file...
-// Do other work
-// [file reading happens in background]
-// File read complete!
+// Before
+// Start computation...
+// After
+// [2 seconds later...]
+// Computation complete!
 ```
 
 ---
@@ -156,26 +165,36 @@ greet("Mohsen", () => {
 
 ---
 
-### Real Callback Example: File Reading
+### Real Callback Example: API Fetch
 
 ```typescript
-import fs from 'fs';
+// Simulating an API call with callback
+function fetchUserData(userId: number, callback: (data: any) => void) {
+  console.log(`Fetching user ${userId}...`);
+  
+  // Simulate network delay
+  setTimeout(() => {
+    const userData = {
+      id: userId,
+      name: "Mohsen",
+      email: "mohsen@example.com"
+    };
+    callback(userData);
+  }, 1000);
+}
 
-// Reading a file with callback
-fs.readFile('data.txt', 'utf8', (err, data) => {
-  if (err) {
-    console.error("Error reading file:", err);
-    return;
-  }
-  console.log("File content:", data);
+// Using the callback
+fetchUserData(123, (user) => {
+  console.log("User data received:", user);
 });
 
 console.log("This runs immediately!");
 
 // Output:
+// Fetching user 123...
 // This runs immediately!
-// [file reading happens...]
-// File content: [file data here]
+// [1 second later...]
+// User data received: { id: 123, name: 'Mohsen', ... }
 ```
 
 ---
@@ -191,7 +210,7 @@ In Node.js, callbacks follow a standard pattern:
 function fetchData(callback: (err: Error | null, data?: string) => void) {
   // Simulate async operation
   setTimeout(() => {
-    const success = Math.random() > 0.5;
+    const success = Math.random() > 0.3;
     
     if (success) {
       callback(null, "Data fetched successfully!");
@@ -219,31 +238,48 @@ When you have multiple async operations that depend on each other, callbacks get
 
 ```typescript
 // Callback Hell Example (Pyramid of Doom)
-fs.readFile('user.json', 'utf8', (err, userData) => {
+function getUser(userId: number, callback: (err: Error | null, user?: any) => void) {
+  setTimeout(() => {
+    callback(null, { id: userId, name: "Mohsen" });
+  }, 1000);
+}
+
+function getPosts(userId: number, callback: (err: Error | null, posts?: any[]) => void) {
+  setTimeout(() => {
+    callback(null, [{ id: 1, title: "Post 1" }, { id: 2, title: "Post 2" }]);
+  }, 1000);
+}
+
+function getComments(postId: number, callback: (err: Error | null, comments?: any[]) => void) {
+  setTimeout(() => {
+    callback(null, [{ id: 1, text: "Great post!" }]);
+  }, 1000);
+}
+
+// Using them together - CALLBACK HELL!
+getUser(123, (err, user) => {
   if (err) {
     console.error(err);
     return;
   }
   
-  const user = JSON.parse(userData);
+  console.log("Got user:", user);
   
-  fs.readFile(`posts/${user.id}.json`, 'utf8', (err, postsData) => {
+  getPosts(user.id, (err, posts) => {
     if (err) {
       console.error(err);
       return;
     }
     
-    const posts = JSON.parse(postsData);
+    console.log("Got posts:", posts);
     
-    fs.readFile(`comments/${posts[0].id}.json`, 'utf8', (err, commentsData) => {
+    getComments(posts[0].id, (err, comments) => {
       if (err) {
         console.error(err);
         return;
       }
       
-      const comments = JSON.parse(commentsData);
-      console.log(comments);
-      
+      console.log("Got comments:", comments);
       // This is getting ridiculous! 😱
     });
   });
@@ -352,22 +388,30 @@ function makeApiCall() {
   console.log("API call made!");
   // Make actual API call here
 }
+
+// Try calling multiple times quickly
+makeApiCall(); // "API call made!"
+makeApiCall(); // "Rate limited! Please wait..."
+setTimeout(() => makeApiCall(), 1500); // "API call made!" (after 1.5s)
 ```
 
 **Example 2: Simple Polling**
 ```typescript
 // Check for updates every 5 seconds
 function pollForUpdates() {
-  setInterval(async () => {
+  setInterval(() => {
     console.log("Checking for updates...");
-    // Check server for new data
-    const hasUpdates = await checkServer();
+    
+    // Simulate checking server
+    const hasUpdates = Math.random() > 0.7;
     
     if (hasUpdates) {
       console.log("New updates available!");
     }
   }, 5000);
 }
+
+pollForUpdates();
 ```
 
 **Example 3: Countdown Timer**
@@ -375,11 +419,14 @@ function pollForUpdates() {
 function countdown(seconds: number) {
   let remaining = seconds;
   
+  console.log(`${remaining} seconds remaining...`);
+  
   const intervalId = setInterval(() => {
-    console.log(`${remaining} seconds remaining...`);
     remaining--;
     
-    if (remaining < 0) {
+    if (remaining > 0) {
+      console.log(`${remaining} seconds remaining...`);
+    } else {
       clearInterval(intervalId);
       console.log("Time's up!");
     }
@@ -414,7 +461,7 @@ function startPolling() {
 
 const stopPolling = startPolling();
 // Later...
-stopPolling(); // Properly cleaned up
+setTimeout(stopPolling, 5000); // Stop after 5 seconds
 ```
 
 **2. Zero Delay Doesn't Mean Immediate**
@@ -510,7 +557,32 @@ myPromise
   });
 
 // Chaining multiple .then()
-fetchUser()
+function fetchUser(id: number): Promise<any> {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({ id, name: "Mohsen" });
+    }, 1000);
+  });
+}
+
+function fetchUserPosts(userId: number): Promise<any[]> {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve([{ id: 1, title: "Post 1" }, { id: 2, title: "Post 2" }]);
+    }, 1000);
+  });
+}
+
+function fetchPostComments(postId: number): Promise<any[]> {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve([{ id: 1, text: "Great!" }]);
+    }, 1000);
+  });
+}
+
+// Clean promise chain!
+fetchUser(123)
   .then((user) => {
     console.log("Got user:", user);
     return fetchUserPosts(user.id); // Return another promise
@@ -535,29 +607,32 @@ fetchUser()
 
 ```typescript
 // Old callback style
-fs.readFile('data.txt', 'utf8', (err, data) => {
-  if (err) {
-    console.error(err);
-    return;
-  }
-  console.log(data);
-});
+function fetchDataCallback(callback: (err: Error | null, data?: string) => void) {
+  setTimeout(() => {
+    const success = Math.random() > 0.3;
+    if (success) {
+      callback(null, "Data fetched!");
+    } else {
+      callback(new Error("Failed!"));
+    }
+  }, 1000);
+}
 
 // Convert to Promise
-const readFilePromise = (path: string): Promise<string> => {
+function fetchDataPromise(): Promise<string> {
   return new Promise((resolve, reject) => {
-    fs.readFile(path, 'utf8', (err, data) => {
+    fetchDataCallback((err, data) => {
       if (err) {
         reject(err);
       } else {
-        resolve(data);
+        resolve(data!);
       }
     });
   });
-};
+}
 
 // Use the Promise
-readFilePromise('data.txt')
+fetchDataPromise()
   .then(data => console.log(data))
   .catch(err => console.error(err));
 ```
@@ -571,12 +646,27 @@ readFilePromise('data.txt')
 Execute multiple promises in parallel and wait for **all** to complete.
 
 ```typescript
-// Run multiple operations in parallel
-const promise1 = fetch('/api/users');
-const promise2 = fetch('/api/posts');
-const promise3 = fetch('/api/comments');
+// Simulate multiple API calls
+function fetchUsers(): Promise<any[]> {
+  return new Promise(resolve => {
+    setTimeout(() => resolve([{ id: 1, name: "User1" }]), 1000);
+  });
+}
 
-Promise.all([promise1, promise2, promise3])
+function fetchPosts(): Promise<any[]> {
+  return new Promise(resolve => {
+    setTimeout(() => resolve([{ id: 1, title: "Post1" }]), 1500);
+  });
+}
+
+function fetchComments(): Promise<any[]> {
+  return new Promise(resolve => {
+    setTimeout(() => resolve([{ id: 1, text: "Comment1" }]), 800);
+  });
+}
+
+// Run all in parallel
+Promise.all([fetchUsers(), fetchPosts(), fetchComments()])
   .then(([users, posts, comments]) => {
     console.log("All data fetched!");
     console.log({ users, posts, comments });
@@ -702,16 +792,30 @@ Promise.any(promises)
 ```typescript
 // Traditional Promise
 function fetchData(): Promise<string> {
-  return fetch('/api/data')
-    .then(response => response.json())
-    .then(data => data.message);
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve("Data fetched!");
+    }, 1000);
+  });
+}
+
+function processDataWithPromises() {
+  fetchData()
+    .then(data => {
+      console.log(data);
+      return "Processed";
+    })
+    .then(result => {
+      console.log(result);
+    });
 }
 
 // Async/Await version
-async function fetchData(): Promise<string> {
-  const response = await fetch('/api/data');
-  const data = await response.json();
-  return data.message;
+async function processDataWithAsync() {
+  const data = await fetchData();
+  console.log(data);
+  const result = "Processed";
+  console.log(result);
 }
 ```
 
@@ -726,9 +830,24 @@ async function fetchData(): Promise<string> {
 
 ```typescript
 // Promise .catch() style
-function fetchUser(id: number) {
-  return fetch(`/api/users/${id}`)
-    .then(response => response.json())
+function fetchUser(id: number): Promise<any> {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      if (id > 0) {
+        resolve({ id, name: "Mohsen" });
+      } else {
+        reject(new Error("Invalid ID"));
+      }
+    }, 1000);
+  });
+}
+
+function getUserPromise(id: number) {
+  return fetchUser(id)
+    .then(user => {
+      console.log("User:", user);
+      return user;
+    })
     .catch(error => {
       console.error("Error:", error);
       throw error;
@@ -736,10 +855,10 @@ function fetchUser(id: number) {
 }
 
 // Async/await with try/catch
-async function fetchUser(id: number) {
+async function getUserAsync(id: number) {
   try {
-    const response = await fetch(`/api/users/${id}`);
-    const user = await response.json();
+    const user = await fetchUser(id);
+    console.log("User:", user);
     return user;
   } catch (error) {
     console.error("Error:", error);
@@ -754,21 +873,18 @@ async function fetchUser(id: number) {
 
 Let's solve the same problem using all three patterns:
 
-**Problem:** Read user file, then read their posts, then read comments.
+**Problem:** Fetch user, then their posts, then comments.
 
 #### Callback Hell Version
 ```typescript
-fs.readFile('user.json', 'utf8', (err, userData) => {
+getUser(123, (err, user) => {
   if (err) throw err;
-  const user = JSON.parse(userData);
   
-  fs.readFile(`posts/${user.id}.json`, 'utf8', (err, postsData) => {
+  getPosts(user.id, (err, posts) => {
     if (err) throw err;
-    const posts = JSON.parse(postsData);
     
-    fs.readFile(`comments/${posts[0].id}.json`, 'utf8', (err, commentsData) => {
+    getComments(posts[0].id, (err, comments) => {
       if (err) throw err;
-      const comments = JSON.parse(commentsData);
       console.log(comments);
     });
   });
@@ -777,35 +893,20 @@ fs.readFile('user.json', 'utf8', (err, userData) => {
 
 #### Promise Chain Version
 ```typescript
-readFilePromise('user.json')
-  .then(userData => {
-    const user = JSON.parse(userData);
-    return readFilePromise(`posts/${user.id}.json`);
-  })
-  .then(postsData => {
-    const posts = JSON.parse(postsData);
-    return readFilePromise(`comments/${posts[0].id}.json`);
-  })
-  .then(commentsData => {
-    const comments = JSON.parse(commentsData);
-    console.log(comments);
-  })
+fetchUser(123)
+  .then(user => fetchUserPosts(user.id))
+  .then(posts => fetchPostComments(posts[0].id))
+  .then(comments => console.log(comments))
   .catch(error => console.error(error));
 ```
 
 #### Async/Await Version (Cleanest!)
 ```typescript
-async function fetchUserComments() {
+async function getUserComments() {
   try {
-    const userData = await readFilePromise('user.json');
-    const user = JSON.parse(userData);
-    
-    const postsData = await readFilePromise(`posts/${user.id}.json`);
-    const posts = JSON.parse(postsData);
-    
-    const commentsData = await readFilePromise(`comments/${posts[0].id}.json`);
-    const comments = JSON.parse(commentsData);
-    
+    const user = await fetchUser(123);
+    const posts = await fetchUserPosts(user.id);
+    const comments = await fetchPostComments(posts[0].id);
     console.log(comments);
   } catch (error) {
     console.error(error);
@@ -822,9 +923,9 @@ async function fetchUserComments() {
 ```typescript
 // ❌ Sequential (slow) - Each waits for previous
 async function fetchAllDataSequential() {
-  const users = await fetch('/api/users');      // Wait 1s
-  const posts = await fetch('/api/posts');      // Wait 1s
-  const comments = await fetch('/api/comments'); // Wait 1s
+  const users = await fetchUsers();      // Wait 1s
+  const posts = await fetchPosts();      // Wait 1s
+  const comments = await fetchComments(); // Wait 1s
   // Total: 3 seconds
   return { users, posts, comments };
 }
@@ -832,11 +933,11 @@ async function fetchAllDataSequential() {
 // ✅ Parallel (fast) - All start at once
 async function fetchAllDataParallel() {
   const [users, posts, comments] = await Promise.all([
-    fetch('/api/users'),      // All start
-    fetch('/api/posts'),      // at the
-    fetch('/api/comments'),   // same time!
+    fetchUsers(),      // All start
+    fetchPosts(),      // at the
+    fetchComments(),   // same time!
   ]);
-  // Total: 1 second (all run together)
+  // Total: 1.5 seconds (longest operation)
   return { users, posts, comments };
 }
 ```
@@ -919,25 +1020,6 @@ async function getData() {
 
 ---
 
-## 🎯 Part 1 Summary
-
-### Pattern Evolution
-```
-Callbacks → Promises → Async/Await
-(Hell)      (Better)    (Best!)
-```
-
-### Key Takeaways
-1. ✅ **Async is essential** for backend (non-blocking operations)
-2. ✅ **Callbacks** are the foundation but create "callback hell"
-3. ✅ **Timers** (setTimeout/setInterval) for delays and repeating tasks
-4. ✅ **Promises** solve callback hell with chainable operations
-5. ✅ **Async/Await** makes async code look synchronous (cleanest!)
-
----
-
-# Part 2: Node.js Fundamentals
-
 ## 6️⃣ Node.js Runtime Deep Dive
 
 ### What is Node.js?
@@ -953,7 +1035,7 @@ Node.js = V8 Engine + libuv + Node APIs
 **Components:**
 1. **V8 Engine** - Google's JavaScript engine (compiles JS to machine code)
 2. **libuv** - C library for async I/O, event loop, threading
-3. **Node APIs** - Built-in modules (fs, http, path, etc.)
+3. **Node APIs** - Built-in modules (http, fs, path, etc.)
 
 ---
 
@@ -995,7 +1077,7 @@ The **Event Loop** is the heart of Node.js - it's what makes async possible.
 └───────────────────────────┘
            ↓
 ┌───────────────────────────┐
-│     Node APIs             │ ← setTimeout, fs, etc.
+│     Node APIs             │ ← setTimeout, fetch, etc.
 └───────────────────────────┘
            ↓
 ┌───────────────────────────┐
@@ -1030,6 +1112,39 @@ console.log("3");
 
 ---
 
+### Event Loop Phases
+
+The Event Loop has several phases it cycles through:
+
+```
+   ┌───────────────────────────┐
+┌─>│           timers          │ ← setTimeout, setInterval
+│  └─────────────┬─────────────┘
+│  ┌─────────────┴─────────────┐
+│  │     pending callbacks     │ ← I/O callbacks
+│  └─────────────┬─────────────┘
+│  ┌─────────────┴─────────────┐
+│  │       idle, prepare       │ ← Internal use
+│  └─────────────┬─────────────┘
+│  ┌─────────────┴─────────────┐
+│  │           poll            │ ← Retrieve new I/O events
+│  └─────────────┬─────────────┘
+│  ┌─────────────┴─────────────┐
+│  │           check           │ ← setImmediate callbacks
+│  └─────────────┬─────────────┘
+│  ┌─────────────┴─────────────┐
+└──┤      close callbacks      │ ← socket.on('close', ...)
+   └───────────────────────────┘
+```
+
+**Simple Explanation:**
+1. **Timers phase:** Execute setTimeout/setInterval callbacks
+2. **Poll phase:** Retrieve new I/O events, execute I/O callbacks
+3. **Check phase:** Execute setImmediate callbacks
+4. **Close phase:** Execute close event callbacks
+
+---
+
 ### Single-Threaded but Non-Blocking
 
 **The Confusion:**
@@ -1042,10 +1157,10 @@ console.log("3");
 // Your code (single thread)
 console.log("Start");
 
-// File reading (sent to libuv thread pool)
-fs.readFile("large-file.txt", (err, data) => {
-  console.log("File read done!");
-});
+// Timer scheduled (sent to libuv)
+setTimeout(() => {
+  console.log("Timer complete!");
+}, 1000);
 
 // Your code continues (non-blocking!)
 console.log("End");
@@ -1053,16 +1168,109 @@ console.log("End");
 // Output:
 // Start
 // End
-// File read done!
+// [1 second later...]
+// Timer complete!
 ```
 
 **Behind the Scenes:**
 - Your JS runs on main thread
-- Heavy operations (file I/O, network) → libuv thread pool
+- Heavy operations (timers, network, crypto) → libuv thread pool
 - When operation completes → callback added to event loop
 - Main thread picks up and executes callback
 
 **Result:** Single-threaded JS code, but parallel I/O operations! 🎯
+
+---
+
+### Microtasks vs Macrotasks
+
+Not all async operations are equal! There are two queues:
+
+**Microtasks (Higher Priority):**
+- Promise callbacks (.then, .catch, .finally)
+- process.nextTick (Node.js specific)
+- queueMicrotask
+
+**Macrotasks (Lower Priority):**
+- setTimeout, setInterval
+- setImmediate
+- I/O operations
+
+**Execution Order:**
+1. Execute current code (call stack)
+2. Execute ALL microtasks
+3. Execute ONE macrotask
+4. Execute ALL microtasks again
+5. Repeat from step 3
+
+---
+
+### Example: Microtasks vs Macrotasks
+
+```typescript
+console.log("1: Start");
+
+setTimeout(() => {
+  console.log("2: setTimeout");
+}, 0);
+
+Promise.resolve().then(() => {
+  console.log("3: Promise");
+});
+
+console.log("4: End");
+
+// Output:
+// 1: Start
+// 4: End
+// 3: Promise  ← Microtask (runs first!)
+// 2: setTimeout  ← Macrotask (runs after)
+```
+
+**Why this order?**
+1. Synchronous code runs first: "1: Start", "4: End"
+2. ALL microtasks run: "3: Promise"
+3. Then macrotasks: "2: setTimeout"
+
+---
+
+### Complex Example: Understanding the Order
+
+```typescript
+console.log("1");
+
+setTimeout(() => {
+  console.log("2");
+  Promise.resolve().then(() => console.log("3"));
+}, 0);
+
+Promise.resolve().then(() => {
+  console.log("4");
+  setTimeout(() => console.log("5"), 0);
+});
+
+console.log("6");
+
+// Output:
+// 1
+// 6
+// 4
+// 2
+// 3
+// 5
+```
+
+**Step-by-Step:**
+1. `console.log("1")` - synchronous
+2. `setTimeout` - scheduled as macrotask
+3. `Promise.then` - scheduled as microtask
+4. `console.log("6")` - synchronous
+5. Microtask queue: `console.log("4")` executes
+6. Inside microtask: `setTimeout` scheduled
+7. Macrotask queue: `console.log("2")` executes
+8. Inside macrotask: Promise scheduled as microtask
+9. Microtask queue: `console.log("3")` executes
+10. Macrotask queue: `console.log("5")` executes
 
 ---
 
@@ -1071,781 +1279,122 @@ console.log("End");
 Unlike browsers (where globals are `window`), Node.js has different globals:
 
 ```typescript
-// __dirname - Current directory path
-console.log(__dirname);
-// Output: /home/user/project/src
-
-// __filename - Current file path
-console.log(__filename);
-// Output: /home/user/project/src/index.ts
-
-// process - Info about current Node.js process
-console.log(process.version);    // Node version
-console.log(process.platform);   // OS platform
-console.log(process.pid);        // Process ID
-console.log(process.env);        // Environment variables
-
 // global - Like window in browser
 global.myVar = "Hello";
 console.log(global.myVar); // "Hello"
+
+// console - Same as browser
+console.log("Message");
+console.error("Error");
+console.warn("Warning");
+
+// __dirname - Current directory path (CommonJS)
+// __filename - Current file path (CommonJS)
+// Note: In ES modules, use import.meta.url
+
+// process - Info about current Node.js process
+console.log(process.version);    // Node version (e.g., v18.0.0)
+console.log(process.platform);   // OS platform (e.g., 'linux', 'darwin', 'win32')
+console.log(process.pid);        // Process ID
+console.log(process.cwd());      // Current working directory
 ```
 
 ---
 
-### Process Object Deep Dive
+### The Process Object
+
+The `process` object provides information and control over the current Node.js process.
 
 ```typescript
-// Exit codes
-process.exit(0); // Success
-process.exit(1); // Error
+// Version information
+console.log(process.version);        // v18.0.0
+console.log(process.versions.node);  // Node version
+console.log(process.versions.v8);    // V8 engine version
 
-// Process events
-process.on('exit', (code) => {
-  console.log(`Exiting with code: ${code}`);
-});
+// Platform information
+console.log(process.platform);  // 'linux', 'darwin', 'win32'
+console.log(process.arch);      // 'x64', 'arm', 'arm64'
 
-process.on('uncaughtException', (error) => {
-  console.error('Unhandled error:', error);
-  process.exit(1);
-});
+// Process ID
+console.log(process.pid);  // Process ID number
 
-// Command line arguments
-// Run: node app.ts arg1 arg2
-console.log(process.argv);
-// Output: ['/usr/bin/node', '/path/to/app.ts', 'arg1', 'arg2']
+// Current working directory
+console.log(process.cwd());  // /home/user/project
+
+// Environment variables
+console.log(process.env.NODE_ENV);  // 'development' or 'production'
+console.log(process.env.PORT);      // Port number from environment
 
 // Memory usage
 console.log(process.memoryUsage());
-// Output: { rss: 24000000, heapTotal: 6000000, ... }
-
-// Current working directory
-console.log(process.cwd());
-// Output: /home/user/project
-```
-
----
-
-## 7️⃣ File System Operations
-
-### The `fs` Module
-
-Node.js provides the `fs` module for file system operations.
-
-**Three Versions:**
-1. **Callback-based** (old way)
-2. **Promise-based** (modern way)
-3. **Synchronous** (blocking, avoid in production)
-
----
-
-### Sync vs Async Methods
-
-#### Synchronous (Blocking) - Use Sparingly!
-
-```typescript
-import fs from 'fs';
-
-console.log("Start");
-
-// BLOCKS everything until file is read
-const data = fs.readFileSync('data.txt', 'utf8');
-console.log(data);
-
-console.log("End");
-
-// Output (sequential):
-// Start
-// [file content]
-// End
-```
-
-**When to Use Sync:**
-- ✅ Startup configuration (reading config files on app start)
-- ✅ Simple scripts where performance doesn't matter
-- ❌ NEVER in request handlers or production servers!
-
----
-
-#### Asynchronous (Non-Blocking) - Best Practice!
-
-**Method 1: Callback Style (Old)**
-```typescript
-import fs from 'fs';
-
-console.log("Start");
-
-fs.readFile('data.txt', 'utf8', (err, data) => {
-  if (err) {
-    console.error("Error:", err);
-    return;
-  }
-  console.log(data);
-});
-
-console.log("End");
-
-// Output (async):
-// Start
-// End
-// [file content]
-```
-
-**Method 2: Promise Style (Modern!)**
-```typescript
-import { promises as fs } from 'fs';
-
-console.log("Start");
-
-fs.readFile('data.txt', 'utf8')
-  .then(data => console.log(data))
-  .catch(err => console.error("Error:", err));
-
-console.log("End");
-
-// Output (async):
-// Start
-// End
-// [file content]
-```
-
-**Method 3: Async/Await (Best!)**
-```typescript
-import { promises as fs } from 'fs';
-
-async function readData() {
-  try {
-    console.log("Start");
-    const data = await fs.readFile('data.txt', 'utf8');
-    console.log(data);
-    console.log("End");
-  } catch (err) {
-    console.error("Error:", err);
-  }
-}
-
-readData();
-```
-
----
-
-### Common File Operations
-
-#### 1. Reading Files
-
-```typescript
-import { promises as fs } from 'fs';
-
-// Read as string
-async function readTextFile() {
-  try {
-    const data = await fs.readFile('file.txt', 'utf8');
-    console.log(data);
-  } catch (error) {
-    console.error('Error reading file:', error);
-  }
-}
-
-// Read as buffer (binary data)
-async function readBinaryFile() {
-  try {
-    const buffer = await fs.readFile('image.png');
-    console.log(buffer); // <Buffer 89 50 4e 47 ...>
-  } catch (error) {
-    console.error('Error reading file:', error);
-  }
-}
-
-// Check if file exists
-async function fileExists(path: string): Promise<boolean> {
-  try {
-    await fs.access(path);
-    return true;
-  } catch {
-    return false;
-  }
-}
-```
-
----
-
-#### 2. Writing Files
-
-```typescript
-import { promises as fs } from 'fs';
-
-// Write string to file (overwrites existing)
-async function writeFile() {
-  try {
-    await fs.writeFile('output.txt', 'Hello, Node.js!');
-    console.log('File written successfully');
-  } catch (error) {
-    console.error('Error writing file:', error);
-  }
-}
-
-// Append to file (doesn't overwrite)
-async function appendToFile() {
-  try {
-    await fs.appendFile('log.txt', 'New log entry\n');
-    console.log('Content appended');
-  } catch (error) {
-    console.error('Error appending:', error);
-  }
-}
-
-// Write JSON data
-async function writeJSON() {
-  const data = {
-    name: 'Mohsen',
-    age: 28,
-    committee: 'Backend'
-  };
-  
-  try {
-    await fs.writeFile(
-      'data.json',
-      JSON.stringify(data, null, 2) // Pretty print with 2 spaces
-    );
-    console.log('JSON written successfully');
-  } catch (error) {
-    console.error('Error writing JSON:', error);
-  }
-}
-```
-
----
-
-#### 3. Copying Files
-
-```typescript
-import { promises as fs } from 'fs';
-
-// Simple copy
-async function copyFile() {
-  try {
-    await fs.copyFile('source.txt', 'destination.txt');
-    console.log('File copied successfully');
-  } catch (error) {
-    console.error('Error copying file:', error);
-  }
-}
-
-// Copy with overwrite protection
-async function safeCopyFile(src: string, dest: string) {
-  try {
-    // Check if destination exists
-    const exists = await fileExists(dest);
-    
-    if (exists) {
-      console.log('Destination already exists!');
-      return;
-    }
-    
-    await fs.copyFile(src, dest);
-    console.log('File copied successfully');
-  } catch (error) {
-    console.error('Error copying file:', error);
-  }
-}
-```
-
----
-
-#### 4. Deleting Files
-
-```typescript
-import { promises as fs } from 'fs';
-
-// Delete a file
-async function deleteFile(path: string) {
-  try {
-    await fs.unlink(path);
-    console.log(`Deleted: ${path}`);
-  } catch (error) {
-    console.error('Error deleting file:', error);
-  }
-}
-
-// Safe delete (check if exists first)
-async function safeDeleteFile(path: string) {
-  try {
-    const exists = await fileExists(path);
-    
-    if (!exists) {
-      console.log('File does not exist');
-      return;
-    }
-    
-    await fs.unlink(path);
-    console.log(`Deleted: ${path}`);
-  } catch (error) {
-    console.error('Error deleting file:', error);
-  }
-}
-```
-
----
-
-#### 5. Getting File Information
-
-```typescript
-import { promises as fs } from 'fs';
-
-async function getFileInfo(path: string) {
-  try {
-    const stats = await fs.stat(path);
-    
-    console.log({
-      size: stats.size,           // Size in bytes
-      isFile: stats.isFile(),     // Is it a file?
-      isDirectory: stats.isDirectory(), // Is it a directory?
-      created: stats.birthtime,   // Creation time
-      modified: stats.mtime,      // Last modified time
-    });
-  } catch (error) {
-    console.error('Error getting file info:', error);
-  }
-}
-```
-
----
-
-### Working with Directories
-
-#### Creating Directories
-
-```typescript
-import { promises as fs } from 'fs';
-
-// Create single directory
-async function createDir() {
-  try {
-    await fs.mkdir('new-folder');
-    console.log('Directory created');
-  } catch (error) {
-    console.error('Error creating directory:', error);
-  }
-}
-
-// Create nested directories
-async function createNestedDirs() {
-  try {
-    await fs.mkdir('path/to/nested/folder', { recursive: true });
-    console.log('Nested directories created');
-  } catch (error) {
-    console.error('Error creating directories:', error);
-  }
-}
-```
-
----
-
-#### Reading Directories
-
-```typescript
-import { promises as fs } from 'fs';
-
-// List files in directory
-async function listFiles(dirPath: string) {
-  try {
-    const files = await fs.readdir(dirPath);
-    console.log('Files:', files);
-    // Output: ['file1.txt', 'file2.js', 'subfolder']
-  } catch (error) {
-    console.error('Error reading directory:', error);
-  }
-}
-
-// Get detailed file information
-async function listFilesDetailed(dirPath: string) {
-  try {
-    const files = await fs.readdir(dirPath, { withFileTypes: true });
-    
-    for (const file of files) {
-      const type = file.isDirectory() ? 'DIR' : 'FILE';
-      console.log(`${type}: ${file.name}`);
-    }
-  } catch (error) {
-    console.error('Error reading directory:', error);
-  }
-}
-```
-
----
-
-#### Deleting Directories
-
-```typescript
-import { promises as fs } from 'fs';
-
-// Delete empty directory
-async function deleteEmptyDir(path: string) {
-  try {
-    await fs.rmdir(path);
-    console.log('Directory deleted');
-  } catch (error) {
-    console.error('Error deleting directory:', error);
-  }
-}
-
-// Delete directory with contents
-async function deleteDir(path: string) {
-  try {
-    await fs.rm(path, { recursive: true, force: true });
-    console.log('Directory and contents deleted');
-  } catch (error) {
-    console.error('Error deleting directory:', error);
-  }
-}
-```
-
----
-
-### Real-World Example: File Processing
-
-```typescript
-import { promises as fs } from 'fs';
-import path from 'path';
-
-// Process multiple text files
-async function processFiles() {
-  try {
-    // 1. Read directory
-    const files = await fs.readdir('./data');
-    
-    // 2. Filter .txt files
-    const textFiles = files.filter(file => file.endsWith('.txt'));
-    
-    // 3. Process each file
-    for (const file of textFiles) {
-      const filePath = path.join('./data', file);
-      
-      // Read file
-      const content = await fs.readFile(filePath, 'utf8');
-      
-      // Transform content
-      const processed = content.toUpperCase();
-      
-      // Write to new location
-      const outputPath = path.join('./output', file);
-      await fs.writeFile(outputPath, processed);
-      
-      console.log(`Processed: ${file}`);
-    }
-    
-    console.log('All files processed!');
-  } catch (error) {
-    console.error('Error processing files:', error);
-  }
-}
-
-processFiles();
-```
-
----
-
-### Error Handling Best Practices
-
-```typescript
-import { promises as fs } from 'fs';
-
-// Specific error handling
-async function readFileSafe(path: string) {
-  try {
-    const data = await fs.readFile(path, 'utf8');
-    return data;
-  } catch (error: any) {
-    // Handle specific error codes
-    if (error.code === 'ENOENT') {
-      console.error('File not found:', path);
-    } else if (error.code === 'EACCES') {
-      console.error('Permission denied:', path);
-    } else if (error.code === 'EISDIR') {
-      console.error('Path is a directory:', path);
-    } else {
-      console.error('Unknown error:', error);
-    }
-    
-    return null;
-  }
-}
-
-// Retry logic
-async function readFileWithRetry(
-  path: string,
-  maxRetries: number = 3
-): Promise<string | null> {
-  for (let attempt = 1; attempt <= maxRetries; attempt++) {
-    try {
-      const data = await fs.readFile(path, 'utf8');
-      return data;
-    } catch (error) {
-      console.log(`Attempt ${attempt} failed`);
-      
-      if (attempt === maxRetries) {
-        console.error('Max retries reached');
-        return null;
-      }
-      
-      // Wait before retry (exponential backoff)
-      await new Promise(resolve => 
-        setTimeout(resolve, Math.pow(2, attempt) * 1000)
-      );
-    }
-  }
-  
-  return null;
-}
-```
-
----
-
-## 8️⃣ Path & Environment
-
-### The Path Module
-
-The `path` module provides utilities for working with file and directory paths.
-
-**Why Use Path Module?**
-- ✅ Cross-platform compatibility (Windows vs Unix)
-- ✅ Handles edge cases (trailing slashes, etc.)
-- ✅ Prevents path-related bugs
-
----
-
-#### Path Operations
-
-```typescript
-import path from 'path';
-
-// Join paths (cross-platform)
-const fullPath = path.join('users', 'mohsen', 'documents', 'file.txt');
-console.log(fullPath);
-// Unix: users/mohsen/documents/file.txt
-// Windows: users\mohsen\documents\file.txt
-
-// Resolve absolute path
-const absolutePath = path.resolve('src', 'app.ts');
-console.log(absolutePath);
-// Output: /home/user/project/src/app.ts
-
-// Get directory name
-const dirName = path.dirname('/users/mohsen/file.txt');
-console.log(dirName); // /users/mohsen
-
-// Get file name
-const fileName = path.basename('/users/mohsen/file.txt');
-console.log(fileName); // file.txt
-
-// Get file extension
-const ext = path.extname('/users/mohsen/file.txt');
-console.log(ext); // .txt
-
-// Parse path into parts
-const parsed = path.parse('/users/mohsen/file.txt');
-console.log(parsed);
 // {
-//   root: '/',
-//   dir: '/users/mohsen',
-//   base: 'file.txt',
-//   ext: '.txt',
-//   name: 'file'
+//   rss: 24000000,       // Resident set size
+//   heapTotal: 6000000,  // Total heap size
+//   heapUsed: 4000000,   // Used heap size
+//   external: 1000000    // External memory
 // }
 
-// Build path from parts
-const built = path.format({
-  dir: '/users/mohsen',
-  base: 'file.txt'
+// Uptime (how long process has been running)
+console.log(process.uptime()); // Seconds since process started
+```
+
+---
+
+### Process Events
+
+The process object is an EventEmitter and can listen to various events:
+
+```typescript
+// Exit event
+process.on('exit', (code) => {
+  console.log(`Process exiting with code: ${code}`);
+  // Can only do synchronous operations here!
 });
-console.log(built); // /users/mohsen/file.txt
-```
 
----
+// Uncaught exception
+process.on('uncaughtException', (error) => {
+  console.error('Uncaught Exception:', error);
+  // Log error, cleanup, then exit
+  process.exit(1);
+});
 
-#### Common Path Patterns
+// Unhandled promise rejection
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('Unhandled Rejection at:', promise, 'reason:', reason);
+  // Handle the error
+});
 
-```typescript
-import path from 'path';
-import { fileURLToPath } from 'url';
-
-// Get current directory in ES modules
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-// Build paths relative to current file
-const configPath = path.join(__dirname, 'config', 'database.json');
-const publicPath = path.join(__dirname, '..', 'public');
-
-// Normalize path (clean up .., ., etc.)
-const messyPath = '/users/mohsen/../yomna/./file.txt';
-const cleanPath = path.normalize(messyPath);
-console.log(cleanPath); // /users/yomna/file.txt
-
-// Check if path is absolute
-console.log(path.isAbsolute('/users/mohsen')); // true
-console.log(path.isAbsolute('users/mohsen'));  // false
-
-// Get relative path between two paths
-const from = '/users/mohsen/projects';
-const to = '/users/mohsen/documents/file.txt';
-const relative = path.relative(from, to);
-console.log(relative); // ../documents/file.txt
-```
-
----
-
-### Environment Variables
-
-Environment variables store configuration values outside your code.
-
-**Why Use Environment Variables?**
-- ✅ Separate config from code
-- ✅ Different settings for dev/staging/production
-- ✅ Keep secrets secure (API keys, passwords)
-
----
-
-#### Accessing Environment Variables
-
-```typescript
-// Access environment variables
-console.log(process.env.NODE_ENV);      // 'development' or 'production'
-console.log(process.env.PORT);          // Port number
-console.log(process.env.DATABASE_URL);  // Database connection string
-
-// Provide defaults
-const port = process.env.PORT || 3000;
-const env = process.env.NODE_ENV || 'development';
-
-// Type-safe access
-function getEnvVar(key: string): string {
-  const value = process.env[key];
-  
-  if (!value) {
-    throw new Error(`Environment variable ${key} is not set`);
-  }
-  
-  return value;
-}
-
-const apiKey = getEnvVar('API_KEY');
-```
-
----
-
-#### Setting Environment Variables
-
-**Method 1: Command Line**
-```bash
-# Unix/Mac
-PORT=3000 NODE_ENV=production node app.js
-
-# Windows (CMD)
-set PORT=3000 && node app.js
-
-# Windows (PowerShell)
-$env:PORT=3000; node app.js
-```
-
-**Method 2: .env File (with dotenv package)**
-```bash
-# .env file
-NODE_ENV=development
-PORT=3000
-DATABASE_URL=postgresql://localhost:5432/mydb
-API_KEY=secret-key-here
-```
-
-```typescript
-// Load .env file
-import 'dotenv/config';
-
-// Now accessible
-console.log(process.env.PORT); // 3000
-console.log(process.env.API_KEY); // secret-key-here
-```
-
-**Method 3: package.json Scripts**
-```json
-{
-  "scripts": {
-    "start": "NODE_ENV=production node dist/app.js",
-    "dev": "NODE_ENV=development nodemon src/app.ts"
-  }
-}
-```
-
----
-
-#### Environment Best Practices
-
-```typescript
-// config.ts - Centralized configuration
-interface Config {
-  port: number;
-  nodeEnv: string;
-  database: {
-    url: string;
-    poolSize: number;
-  };
-  api: {
-    key: string;
-    baseUrl: string;
-  };
-}
-
-function loadConfig(): Config {
-  // Validate required variables
-  const requiredVars = ['DATABASE_URL', 'API_KEY'];
-  
-  for (const varName of requiredVars) {
-    if (!process.env[varName]) {
-      throw new Error(`Missing required environment variable: ${varName}`);
-    }
-  }
-  
-  return {
-    port: parseInt(process.env.PORT || '3000', 10),
-    nodeEnv: process.env.NODE_ENV || 'development',
-    database: {
-      url: process.env.DATABASE_URL!,
-      poolSize: parseInt(process.env.DB_POOL_SIZE || '10', 10),
-    },
-    api: {
-      key: process.env.API_KEY!,
-      baseUrl: process.env.API_BASE_URL || 'https://api.example.com',
-    },
-  };
-}
-
-export const config = loadConfig();
-
-// Usage in other files
-import { config } from './config';
-
-console.log(`Server running on port ${config.port}`);
+// Interrupt signal (Ctrl+C)
+process.on('SIGINT', () => {
+  console.log('Received SIGINT, shutting down gracefully...');
+  // Cleanup code here
+  process.exit(0);
+});
 ```
 
 ---
 
 ### Command Line Arguments
 
+Access arguments passed to your Node.js script:
+
 ```typescript
-// Access command line arguments
+// process.argv is an array of command line arguments
 console.log(process.argv);
 
-// Example: node app.ts --port 3000 --env production
-// Output: [
-//   '/usr/bin/node',           // Node binary
-//   '/path/to/app.ts',         // Script path
-//   '--port',                  // Argument 1
-//   '3000',                    // Argument 2
-//   '--env',                   // Argument 3
-//   'production'               // Argument 4
+// Example: node app.js --port 3000 --env production
+// Output:
+// [
+//   '/usr/bin/node',      // Node binary path
+//   '/path/to/app.js',    // Script path
+//   '--port',             // Argument 1
+//   '3000',               // Argument 2
+//   '--env',              // Argument 3
+//   'production'          // Argument 4
 // ]
 
 // Simple argument parser
-function parseArgs() {
+function parseArgs(): Record<string, string> {
   const args: Record<string, string> = {};
   
   for (let i = 2; i < process.argv.length; i += 2) {
@@ -1860,187 +1409,190 @@ function parseArgs() {
 const args = parseArgs();
 console.log(args);
 // { port: '3000', env: 'production' }
+
+const port = args.port || '8080';
+const env = args.env || 'development';
+console.log(`Running on port ${port} in ${env} mode`);
 ```
 
 ---
 
-## 🎯 Complete Example: Log File Manager
+### Exit Codes
 
-Let's build a real-world example combining everything we learned:
+Process can exit with different codes to indicate status:
 
 ```typescript
-import { promises as fs } from 'fs';
-import path from 'path';
+// Exit codes
+process.exit(0);  // Success
+process.exit(1);  // General error
+process.exit(2);  // Misuse of shell command
 
-interface LogEntry {
-  timestamp: string;
-  level: 'info' | 'warning' | 'error';
-  message: string;
+// Graceful shutdown example
+async function shutdown() {
+  console.log('Shutting down gracefully...');
+  
+  // Close database connections, etc.
+  // await db.close();
+  
+  console.log('Cleanup complete');
+  process.exit(0);
 }
 
-class LogManager {
-  private logDir: string;
-  private currentLogFile: string;
+// Handle termination signals
+process.on('SIGTERM', shutdown);
+process.on('SIGINT', shutdown);
+```
 
-  constructor(logDir: string = './logs') {
-    this.logDir = logDir;
-    this.currentLogFile = this.getLogFileName();
-  }
+---
 
-  // Initialize log directory
-  async initialize(): Promise<void> {
-    try {
-      await fs.mkdir(this.logDir, { recursive: true });
-      console.log('Log directory ready');
-    } catch (error) {
-      console.error('Failed to create log directory:', error);
-      throw error;
-    }
-  }
+## 🎯 Practical Example: Building a Simple Task Scheduler
 
-  // Generate log file name based on current date
-  private getLogFileName(): string {
-    const date = new Date().toISOString().split('T')[0];
-    return path.join(this.logDir, `app-${date}.log`);
-  }
+Let's combine everything we learned into a practical example:
 
-  // Write log entry
-  async log(level: LogEntry['level'], message: string): Promise<void> {
-    const entry: LogEntry = {
-      timestamp: new Date().toISOString(),
-      level,
-      message,
+```typescript
+interface Task {
+  id: number;
+  name: string;
+  delayMs: number;
+  execute: () => Promise<void>;
+}
+
+class TaskScheduler {
+  private tasks: Task[] = [];
+  private nextId: number = 1;
+  private isRunning: boolean = false;
+
+  // Add a task to the scheduler
+  addTask(name: string, delayMs: number, execute: () => Promise<void>): number {
+    const task: Task = {
+      id: this.nextId++,
+      name,
+      delayMs,
+      execute
     };
+    
+    this.tasks.push(task);
+    console.log(`✅ Task "${name}" added (ID: ${task.id})`);
+    return task.id;
+  }
 
-    const logLine = `[${entry.timestamp}] ${entry.level.toUpperCase()}: ${entry.message}\n`;
+  // Remove a task by ID
+  removeTask(id: number): boolean {
+    const index = this.tasks.findIndex(t => t.id === id);
+    
+    if (index !== -1) {
+      const task = this.tasks[index];
+      this.tasks.splice(index, 1);
+      console.log(`❌ Task "${task.name}" removed`);
+      return true;
+    }
+    
+    return false;
+  }
 
+  // Start executing tasks
+  async start(): Promise<void> {
+    if (this.isRunning) {
+      console.log("⚠️  Scheduler already running");
+      return;
+    }
+
+    this.isRunning = true;
+    console.log("🚀 Scheduler started");
+
+    // Execute all tasks in parallel
+    const taskPromises = this.tasks.map(task => this.executeTask(task));
+    
     try {
-      await fs.appendFile(this.currentLogFile, logLine);
+      await Promise.all(taskPromises);
+      console.log("✨ All tasks completed");
     } catch (error) {
-      console.error('Failed to write log:', error);
+      console.error("❌ Error executing tasks:", error);
+    } finally {
+      this.isRunning = false;
     }
   }
 
-  // Convenience methods
-  async info(message: string): Promise<void> {
-    await this.log('info', message);
-  }
-
-  async warning(message: string): Promise<void> {
-    await this.log('warning', message);
-  }
-
-  async error(message: string): Promise<void> {
-    await this.log('error', message);
-  }
-
-  // Read today's logs
-  async readTodayLogs(): Promise<string> {
+  // Execute a single task
+  private async executeTask(task: Task): Promise<void> {
+    console.log(`⏳ Task "${task.name}" scheduled for ${task.delayMs}ms`);
+    
+    // Wait for the specified delay
+    await this.delay(task.delayMs);
+    
+    console.log(`▶️  Task "${task.name}" executing...`);
+    
     try {
-      const data = await fs.readFile(this.currentLogFile, 'utf8');
-      return data;
-    } catch (error: any) {
-      if (error.code === 'ENOENT') {
-        return 'No logs for today';
-      }
+      await task.execute();
+      console.log(`✅ Task "${task.name}" completed`);
+    } catch (error) {
+      console.error(`❌ Task "${task.name}" failed:`, error);
       throw error;
     }
   }
 
-  // Delete old logs (older than specified days)
-  async cleanOldLogs(daysToKeep: number = 7): Promise<number> {
-    try {
-      const files = await fs.readdir(this.logDir);
-      const now = Date.now();
-      const maxAge = daysToKeep * 24 * 60 * 60 * 1000;
-      let deletedCount = 0;
-
-      for (const file of files) {
-        const filePath = path.join(this.logDir, file);
-        const stats = await fs.stat(filePath);
-        const age = now - stats.mtime.getTime();
-
-        if (age > maxAge) {
-          await fs.unlink(filePath);
-          deletedCount++;
-          console.log(`Deleted old log: ${file}`);
-        }
-      }
-
-      return deletedCount;
-    } catch (error) {
-      console.error('Error cleaning logs:', error);
-      return 0;
-    }
+  // Helper: Promise-based delay
+  private delay(ms: number): Promise<void> {
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 
-  // Get log statistics
-  async getStats(): Promise<{
-    totalLogs: number;
-    totalSize: number;
-    oldestLog: string | null;
-  }> {
-    try {
-      const files = await fs.readdir(this.logDir);
-      let totalSize = 0;
-      let oldestDate = Infinity;
-      let oldestLog: string | null = null;
-
-      for (const file of files) {
-        const filePath = path.join(this.logDir, file);
-        const stats = await fs.stat(filePath);
-        
-        totalSize += stats.size;
-        
-        if (stats.mtime.getTime() < oldestDate) {
-          oldestDate = stats.mtime.getTime();
-          oldestLog = file;
-        }
-      }
-
-      return {
-        totalLogs: files.length,
-        totalSize,
-        oldestLog,
-      };
-    } catch (error) {
-      console.error('Error getting stats:', error);
-      return { totalLogs: 0, totalSize: 0, oldestLog: null };
-    }
+  // Get scheduler status
+  getStatus(): string {
+    return `
+Scheduler Status:
+- Running: ${this.isRunning}
+- Tasks: ${this.tasks.length}
+- Task List:
+${this.tasks.map(t => `  • ${t.name} (ID: ${t.id}, Delay: ${t.delayMs}ms)`).join('\n')}
+    `.trim();
   }
 }
 
-// Usage example
+// Usage Example
 async function main() {
-  const logger = new LogManager('./logs');
+  const scheduler = new TaskScheduler();
 
-  // Initialize
-  await logger.initialize();
+  // Add various tasks
+  scheduler.addTask("Fetch Users", 1000, async () => {
+    console.log("  📊 Fetching users from API...");
+    await new Promise(resolve => setTimeout(resolve, 500));
+    console.log("  ✓ Users fetched");
+  });
 
-  // Write logs
-  await logger.info('Application started');
-  await logger.warning('Low memory warning');
-  await logger.error('Database connection failed');
+  scheduler.addTask("Send Emails", 2000, async () => {
+    console.log("  📧 Sending notification emails...");
+    await new Promise(resolve => setTimeout(resolve, 800));
+    console.log("  ✓ Emails sent");
+  });
 
-  // Read today's logs
-  const logs = await logger.readTodayLogs();
-  console.log('Today\'s logs:\n', logs);
+  scheduler.addTask("Generate Report", 500, async () => {
+    console.log("  📈 Generating daily report...");
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    console.log("  ✓ Report generated");
+  });
 
-  // Get statistics
-  const stats = await logger.getStats();
-  console.log('Log statistics:', stats);
+  // Show status
+  console.log(scheduler.getStatus());
+  console.log();
 
-  // Clean old logs (keep last 7 days)
-  const deleted = await logger.cleanOldLogs(7);
-  console.log(`Cleaned ${deleted} old log files`);
+  // Start the scheduler
+  await scheduler.start();
 }
 
-// Error handling
-main().catch((error) => {
-  console.error('Application error:', error);
+// Run the example
+main().catch(error => {
+  console.error("Fatal error:", error);
   process.exit(1);
 });
 ```
+
+**What This Example Demonstrates:**
+- ✅ Using Promises with async/await
+- ✅ setTimeout for delays
+- ✅ Promise.all for parallel execution
+- ✅ Error handling with try/catch
+- ✅ Process events and exit codes
+- ✅ Real-world task scheduling pattern
 
 ---
 
@@ -2048,21 +1600,19 @@ main().catch((error) => {
 
 ### Key Concepts Covered
 
-**Part 1: Async JavaScript**
+**Async Patterns:**
 1. ✅ Synchronous vs Asynchronous programming
 2. ✅ Callbacks and callback hell
 3. ✅ Timers (setTimeout, setInterval)
 4. ✅ Promises and Promise utilities
 5. ✅ Async/await syntax and patterns
 
-**Part 2: Node.js Fundamentals**
-1. ✅ Node.js runtime architecture (V8 + libuv)
-2. ✅ Event Loop and non-blocking I/O
-3. ✅ File system operations (read, write, copy, delete)
-4. ✅ Directory operations
-5. ✅ Path module for cross-platform paths
-6. ✅ Environment variables and configuration
-7. ✅ Command line arguments
+**Node.js Runtime:**
+1. ✅ Node.js architecture (V8 + libuv)
+2. ✅ Event Loop and how it works
+3. ✅ Microtasks vs Macrotasks
+4. ✅ Single-threaded but non-blocking
+5. ✅ Process object and global objects
 
 ---
 
@@ -2073,78 +1623,143 @@ main().catch((error) => {
 - ✅ Always handle errors with try/catch
 - ✅ Use Promise.all() for parallel operations
 - ✅ Avoid mixing callback and Promise styles
+- ✅ Remember: await only works inside async functions
 
-### File Operations
-- ✅ Always use async methods in production
-- ✅ Use `fs.promises` instead of callbacks
-- ✅ Always handle errors properly
-- ✅ Close file handles when done
+### Timers
+- ✅ Always clear intervals to prevent memory leaks
+- ✅ Use clearTimeout/clearInterval when done
+- ✅ Remember setTimeout(fn, 0) is not immediate
+- ✅ Consider using Promises for delays
 
-### Configuration
-- ✅ Use environment variables for config
-- ✅ Never commit secrets to Git
-- ✅ Validate required variables on startup
-- ✅ Provide sensible defaults
-
-### Path Handling
-- ✅ Always use `path.join()` for building paths
-- ✅ Use `path.resolve()` for absolute paths
-- ✅ Never hardcode path separators (/ or \)
-
----
-
-## 🚀 Next Steps
-
-**Practice Projects:**
-1. Build a file backup utility
-2. Create a log analyzer
-3. Build a simple file server
-4. Create a configuration manager
-5. Build a CLI tool with command arguments
-
-**Further Learning:**
-- Explore streams for large files
-- Learn about worker threads
-- Study event emitters
-- Practice with real APIs
+### Promise Handling
+- ✅ Always handle promise rejections
+- ✅ Use Promise.all for parallel, Promise.race for timeouts
+- ✅ Chain promises properly (return inside .then)
+- ✅ Use finally for cleanup operations
 
 ---
 
 ## 💡 Common Pitfalls to Avoid
 
-1. ❌ Using sync methods in server code
+1. ❌ Forgetting to await async functions
 2. ❌ Not handling Promise rejections
-3. ❌ Forgetting to await async functions
-4. ❌ Not clearing intervals/timeouts
-5. ❌ Hardcoding file paths
-6. ❌ Not validating environment variables
-7. ❌ Mixing async patterns (callbacks + promises)
+3. ❌ Sequential awaits when parallel is possible
+4. ❌ Not clearing intervals (memory leaks)
+5. ❌ Mixing callbacks and Promises
+6. ❌ Using sync operations in async code
+7. ❌ Not understanding microtask vs macrotask order
 
 ---
 
-## 🎓 Final Thoughts
+## 🚀 Practice Exercises
 
-**You now know:**
+### Exercise 1: Promise Chain
+Create a function that:
+- Fetches user data (1 second delay)
+- Fetches user posts (1.5 second delay)
+- Returns combined data
+- Use promise chaining
+
+### Exercise 2: Parallel Fetching
+Modify Exercise 1 to fetch data in parallel using Promise.all
+
+### Exercise 3: Rate Limiter
+Build a rate limiter that:
+- Allows max 3 calls per second
+- Queues additional calls
+- Uses setTimeout
+
+### Exercise 4: Retry Logic
+Create a function that:
+- Retries failed operations
+- Max 3 retries with exponential backoff
+- Uses async/await
+
+### Exercise 5: Timer Challenge
+Build a stopwatch that:
+- Starts/stops/resets
+- Shows elapsed time
+- Uses setInterval
+- Cleans up properly
+
+---
+
+## 🎓 Next Steps
+
+**You now understand:**
 - How JavaScript handles async operations
 - When and how to use different async patterns
 - How Node.js runtime works under the hood
-- How to work with files and directories
-- How to handle configuration properly
+- The Event Loop and execution order
 
-**The journey continues:**
-- Next sessions will build on these fundamentals
-- You'll use these patterns in every backend project
-- Practice is key to mastering async programming
+**Coming Next:**
+- Session 4: HTTP from Scratch
+- Building servers with Node.js http module
+- Understanding request/response cycle
+- File system operations (using what we learned!)
 
-**Remember:** Async programming is the heart of Node.js. Master it, and you'll master backend development! 🚀
+**Practice is key:**
+- Try the exercises above
+- Build small async projects
+- Experiment with timers and promises
+- Read Node.js documentation
+
+---
+
+## 🔑 Key Takeaways
+
+### Pattern Evolution
+```
+Callbacks → Promises → Async/Await
+(Hell)      (Better)    (Best!)
+```
+
+### The Golden Rules
+1. **Async/await is syntactic sugar** - It's still Promises underneath
+2. **Event Loop never stops** - It continuously checks for work
+3. **Microtasks run first** - Before any macrotasks
+4. **Single thread for JS** - But parallel I/O operations
+5. **Always handle errors** - Unhandled promises crash your app
 
 ---
 
 ## 📖 Additional Resources
 
-For comprehensive tutorials, tools, and learning materials on async JavaScript and Node.js, refer to:
+### Documentation
 - [MDN: Asynchronous JavaScript](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Asynchronous)
-- [Node.js Official Docs](https://nodejs.org/docs/latest/api/)
+- [Node.js Event Loop Guide](https://nodejs.org/en/docs/guides/event-loop-timers-and-nexttick/)
 - [JavaScript.info: Promises](https://javascript.info/promise-basics)
+
+### Visualizers
+- [Loupe (Event Loop Visualizer)](http://latentflip.com/loupe/)
+- [JavaScript Event Loop Visualization](https://www.jsv9000.app/)
+
+---
+
+## ✅ Session Checklist
+
+Before moving to the next session, make sure you can:
+
+```
+□ Explain synchronous vs asynchronous code
+□ Write callback functions
+□ Understand callback hell problem
+□ Use setTimeout and setInterval
+□ Create and use Promises
+□ Chain promises with .then()
+□ Use Promise.all, Promise.race
+□ Write async/await functions
+□ Handle errors with try/catch
+□ Explain the Event Loop
+□ Understand microtasks vs macrotasks
+□ Use process object
+□ Access command line arguments
+```
+
+**If you can do all of these, you're ready for HTTP and servers!** 🎓
+
+---
+
+**Remember:** Async programming is the foundation of Node.js backend development. Master these concepts, and everything else will make sense! 🚀
 
 Happy coding! 💻
