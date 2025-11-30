@@ -35,8 +35,7 @@ Build a **simplified Library System** to practice basic TypeScript concepts: var
 
 ```
 
-4. Create sample book and magazine objects and update totalBooks then print them
-e.g. increment it's value by 2:
+4. Create sample book and magazine objects and update totalBooks then print them e.g. increment it's value after adding a book and finally increment it's value by 2.
 
 ---
 
