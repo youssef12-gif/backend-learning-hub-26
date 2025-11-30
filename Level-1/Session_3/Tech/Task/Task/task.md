@@ -1,5 +1,5 @@
 
-# JavaScript Advanced – Callback & Async/Await Task  
+# TypeScript Advanced – Callback & Async/Await Task  
 📌 Practice Task for Session 2
 
 ## 📋 Overview
