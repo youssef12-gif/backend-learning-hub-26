@@ -132,6 +132,23 @@ console.log("After");
 
 ---
 
+## what is the problem here?
+
+```javascript
+let data = getUser(); // ❌ this doesn't wait
+let posts = getPosts(data.id); // ❌ this doesn't wait
+```
+* Async functions return immediately, not with results.
+So you cannot "separate them" like normal sync functions.
+
+* Therefore…
+You MUST tell async function:
+
+``` “When you're done, call this function.” ```
+
+* Which leads to nested callbacks.
+
+---
 ## 2️⃣ Callbacks
 
 ### What is a Callback?
@@ -238,49 +255,12 @@ When you have multiple async operations that depend on each other, callbacks get
 
 ```typescript
 // Callback Hell Example (Pyramid of Doom)
-function getUser(userId: number, callback: (err: Error | null, user?: any) => void) {
-  setTimeout(() => {
-    callback(null, { id: userId, name: "Mohsen" });
-  }, 1000);
-}
-
-function getPosts(userId: number, callback: (err: Error | null, posts?: any[]) => void) {
-  setTimeout(() => {
-    callback(null, [{ id: 1, title: "Post 1" }, { id: 2, title: "Post 2" }]);
-  }, 1000);
-}
-
-function getComments(postId: number, callback: (err: Error | null, comments?: any[]) => void) {
-  setTimeout(() => {
-    callback(null, [{ id: 1, text: "Great post!" }]);
-  }, 1000);
-}
-
-// Using them together - CALLBACK HELL!
-getUser(123, (err, user) => {
-  if (err) {
-    console.error(err);
-    return;
-  }
-  
-  console.log("Got user:", user);
-  
+getUser(1, (err, user) => {
   getPosts(user.id, (err, posts) => {
-    if (err) {
-      console.error(err);
-      return;
-    }
-    
-    console.log("Got posts:", posts);
-    
     getComments(posts[0].id, (err, comments) => {
-      if (err) {
-        console.error(err);
-        return;
-      }
-      
-      console.log("Got comments:", comments);
-      // This is getting ridiculous! 😱
+      getLikes(comments[0].id, (err, likes) => {
+        console.log("Finally got everything!");
+      });
     });
   });
 });
@@ -521,6 +501,8 @@ PENDING → FULFILLED (success)
 ```
 
 Once a Promise is fulfilled or rejected, its state **cannot change**.
+
+<img src="../../More/Assests/Images/Promise_cycle.png" alt="Cycle" width="35%" higth="35%">
 
 ---
 
@@ -1614,6 +1596,13 @@ main().catch(error => {
 4. ✅ Single-threaded but non-blocking
 5. ✅ Process object and global objects
 
+**NOTES**
+
+1.  ✅ JavaScript is synchronous by default
+2.  ✅ Callbacks are just functions passed as parameters
+3.  ✅ Async operations (timers, network, etc.) are built-in features
+4.  ✅ Async functions use callbacks to notify you when done
+5.  ✅ Callback hell happened because async needed callbacks before Promises existed
 ---
 
 ## 🎯 Best Practices Recap

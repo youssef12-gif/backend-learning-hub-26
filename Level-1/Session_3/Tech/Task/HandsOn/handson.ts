@@ -18,9 +18,10 @@ Task:
 */
 
 // Example:
-// function greet(name: string, callback: (msg: string) => void) {
-//     // your code here
-// }
+
+// your code here
+
+//Test here
 
 // =========================
 // Part 2: Promises
