@@ -293,7 +293,7 @@ Create a filter to catch all `HttpException`s and return a friendly JSON error r
 
 ### 2. Test Guard
 
--   Try `POST /tasks` without header -> **403 Forbidden**.
+-   Try `POST /tasks` without header -> **401 Forbidden**.
 -   Try `POST /tasks` with `x-api-key: secret-123` -> **201 Created**.
 
 ### 3. Test Interceptor
@@ -328,8 +328,6 @@ By the end of this session, you should understand:
 -   How to transform responses and handle cross-cutting concerns with **Interceptors**.
 -   How to validate and transform data with **Pipes**.
 -   How to handle errors gracefully with **Exception Filters**.
-
-**Next Session Preview**: Now that we have a robust API structure, we will finally connect to a real database using **TypeORM** and **PostgreSQL**!
 
 ---
 
