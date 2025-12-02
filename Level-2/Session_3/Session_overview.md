@@ -20,6 +20,8 @@ Understanding how a request flows through a NestJS application is crucial. When 
 8.  **Exception Filters** (If error occurs)
 9.  **Server Response**
 
+<img src="NestCycle.png" alt="Request Life Cycle from NestJS docs" width="50%">
+
 ---
 
 ### Part 2: Middleware
@@ -339,3 +341,4 @@ By the end of this session, you should understand:
 -   [NestJS Pipes](https://docs.nestjs.com/pipes)
 -   [NestJS Exception Filters](https://docs.nestjs.com/exception-filters)
 -   [Video Reference](https://youtu.be/x1W3FJ1RJlM)
+-   [Request Life Cycle](https://github.com/ahsanatta96/nestjs-request-response-cycle/blob/main/summary.md)
