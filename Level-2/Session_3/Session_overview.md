@@ -198,6 +198,69 @@ export class HttpExceptionFilter implements ExceptionFilter {
 
 ---
 
+| Aspect                      | Middleware                                                                     | Guards                                                                                                  | Interceptors                                                                                   | Pipes                                                                                                      | Exception Filters                                                                                  |
+| --------------------------- | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| **Execution Order**         | 1st (before everything)                                                        | 2nd (after middleware)                                                                                  | 3rd (before handler) & 7th (after handler)                                                     | 4th (before handler, after guards)                                                                         | 8th (when errors occur)                                                                            |
+| **Primary Purpose**         | General request/response processing                                            | Authentication & Authorization                                                                          | Transform request/response, add logic around handlers                                          | Validate & transform input data                                                                            | Handle exceptions & errors                                                                         |
+| **Access to**               | Request, Response, Next function                                               | ExecutionContext                                                                                        | ExecutionContext, CallHandler                                                                  | Value being processed                                                                                      | Exception, ExecutionContext                                                                        |
+| **Can Block Request?**      | Yes (by not calling `next()`)                                                  | Yes (returns true/false)                                                                                | Yes (by not calling `handle()`)                                                                | Yes (throws exception on invalid data)                                                                     | N/A (handles already thrown errors)                                                                |
+| **Return Value**            | void (calls `next()`)                                                          | boolean or Promise<boolean>                                                                             | Observable                                                                                     | Transformed value                                                                                          | Response object                                                                                    |
+| **Scope**                   | Global, Module, Route                                                          | Global, Controller, Route, Method                                                                       | Global, Controller, Route, Method                                                              | Global, Controller, Route, Method, Parameter                                                               | Global, Controller, Method                                                                         |
+| **Dependency Injection**    | No (function-based) / Yes (class-based)                                        | Yes                                                                                                     | Yes                                                                                            | Yes                                                                                                        | Yes                                                                                                |
+| **Common Use Cases**        | - Logging<br>- CORS<br>- Body parsing<br>- Session handling<br>- Rate limiting | - JWT authentication<br>- Role-based access<br>- Permissions<br>- API key validation<br>- Feature flags | - Response formatting<br>- Logging<br>- Caching<br>- Timeout handling<br>- Data transformation | - Input validation<br>- Type conversion<br>- Data sanitization<br>- Default values<br>- DTO transformation | - Global error handling<br>- Custom error responses<br>- Error logging<br>- HTTP exception mapping |
+| **Access to Route Handler** | No                                                                             | No                                                                                                      | Yes (can execute before/after)                                                                 | No                                                                                                         | No                                                                                                 |
+| **Can Modify Response**     | Yes (direct access to `res`)                                                   | No (only allow/deny)                                                                                    | Yes (via RxJS operators)                                                                       | No (only input data)                                                                                       | Yes (return error response)                                                                        |
+| **Error Handling**          | Manual try-catch                                                               | Throw exceptions                                                                                        | Throw exceptions or catch them                                                                 | Throw exceptions                                                                                           | Catches all exceptions                                                                             |
+| **When to Use**             | Early request processing, cross-cutting concerns before routing                | Decide if request should proceed based on user/context                                                  | Transform data or add behavior around the entire request                                       | Ensure data integrity before it reaches handler                                                            | Standardize error responses                                                                        |
+| **Multiple Instances**      | Chain with `next()`                                                            | Multiple guards = AND logic (all must pass)                                                             | Chain with RxJS operators                                                                      | Multiple pipes process in order                                                                            | Most specific filter catches first                                                                 |
+| **Best Practice**           | Keep lightweight, avoid heavy logic                                            | Single responsibility (one check per guard)                                                             | Use for cross-cutting concerns                                                                 | Validate at parameter level when possible                                                                  | One global filter + specific ones for custom exceptions                                            |
+
+---
+
+## Visual Flow Example
+
+```
+Request
+  ↓
+[Middleware 1] → Logger
+  ↓
+[Middleware 2] → CORS
+  ↓
+[Guard 1] → Authentication (JWT)
+  ↓
+[Guard 2] → Authorization (Roles)
+  ↓
+[Interceptor - Before] → Start timer, log
+  ↓
+[Pipe 1] → Validate DTO
+  ↓
+[Pipe 2] → Transform types
+  ↓
+[Controller Handler] → Business Logic
+  ↓
+[Interceptor - After] → Format response, end timer
+  ↓
+Response
+
+  (If error at any point)
+        ↓
+  [Exception Filter] → Handle & format error
+        ↓
+    Error Response
+```
+
+---
+
+## Questions to decide which?
+
+-   Need to process ALL requests before routing? → **Middleware**
+-   Need to decide if request should continue based on user/permissions? → **Guards**
+-   Need to validate/transform incoming data? → **Pipes**
+-   Need to transform response or add behavior around handler? → **Interceptors**
+-   Need to handle errors gracefully? → **Exception Filters**
+
+---
+
 ## Hands-on Phase
 
 ### Project: Enhance Task Manager API
@@ -342,3 +405,7 @@ By the end of this session, you should understand:
 -   [NestJS Exception Filters](https://docs.nestjs.com/exception-filters)
 -   [Video Reference](https://youtu.be/x1W3FJ1RJlM)
 -   [Request Life Cycle](https://github.com/ahsanatta96/nestjs-request-response-cycle/blob/main/summary.md)
+
+```
+
+```
