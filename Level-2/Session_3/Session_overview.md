@@ -20,7 +20,7 @@ Understanding how a request flows through a NestJS application is crucial. When 
 8.  **Exception Filters** (If error occurs)
 9.  **Server Response**
 
-<img src="NestCycle.png" alt="Request Life Cycle from NestJS docs" width="50%">
+<img src="../../More\Assests\Images\NestCycle.png" alt="Request Life Cycle from NestJS docs" width="50%">
 
 ---
 
