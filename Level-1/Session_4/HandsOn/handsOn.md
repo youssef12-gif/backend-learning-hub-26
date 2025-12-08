@@ -49,15 +49,3 @@ Include validation:
 - Age: required, 13-120
 
 ---
-
-Endpoints:
-
-- `GET /posts` - All posts (with query filters)
-- `GET /posts/:id` - Single post
-- `POST /posts` - Create post
-- `PUT /posts/:id` - Update post
-- `DELETE /posts/:id` - Delete post
-- `GET /posts?published=true` - Filter published
-- `GET /posts?author=Mohsen` - Filter by author
-
----
