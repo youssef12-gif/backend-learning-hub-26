@@ -1,10 +1,10 @@
 
 ## 1. Phase Overview
 
-* Phase duration:
-* Levels covered:
-* Number of sessions:
-* Number of students started:
+* Phase duration: 5 weeks
+* Levels covered: both
+* Number of sessions:1 both 4 level 1 3 level 2
+* Number of students started: 
 * Number of students finished:
 
 ---
@@ -13,32 +13,20 @@
 
 ### ✅ What Went Well
 
-*
-*
-*
+* activities and games
+* aligning with members
+* focus that everyone understands the topic
+* following the rules
 
 ### ❌ What Didn’t Go Well
 
-*
-*
-*
+* Tasks (the task itself, feedback)
+* docs
+* system
 
 ### ❓ What Was Unclear or Confusing
 
-*
-*
-*
-
----
-
-## 3. Learning Outcomes Gap Analysis
-
-| Skill     | Expected Level | Actual Level | Gap | Action |
-| --------- | -------------- | ------------ | --- | ------ |
-| Git       |                |              |     |        |
-| APIs      |                |              |     |        |
-| Databases |                |              |     |        |
-| Debugging |                |              |     |        |
+* supporting
 
 ---
 
@@ -51,7 +39,7 @@
 
 ## **Observed reasons for disengagement:**
 
-*
+* 
 
 ---
 
@@ -59,19 +47,13 @@
 
 ### Strengths
 
-*
-*
+* good comunication
 
 ### Pain Points
 
-*
-*
+* AI
+* Late preb
 
-### Resource Issues
-
-* Time:
-* Number of instructors:
-* Preparation:
 
 ---
 
@@ -83,28 +65,29 @@
 
 ### Weaknesses
 
-*
+* Tasks(ai) , hands on
+
+* support (late support announce)
+
+* git github
+
+* session duration timing
+
+* theory tech code split
+
+* pressuer
+
+* overuse ai -> session tasks hands on
+
+* sessions preb
 
 ### Opportunities
 
-*
+* MSP web pentration
+* summer training
 
 ### Threats
 
-*
+* engagment
 
----
 
-## 7. Key Takeaways
-
-*
-*
-*
-
----
-
-## 8. Recommendations for Next Phase
-
-*
-*
-*
