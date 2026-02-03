@@ -1,6 +1,6 @@
 # Product API – Required Tasks
 
-## You are required to implement the following endpoints .
+## Make a new Project that manages products , and implement the following endpoints .
 
 
 ## 1️⃣ Update Product  
