@@ -63,3 +63,10 @@ Delete a product by its ID.
 ---
 
 
+# Bonus : 🌟🌟
+## implement suitable Middleware function , here is middleware examples:
+- validation 
+- logging middleware (logs comming req info)
+- parsing data
+
+
