@@ -10,8 +10,6 @@ tsconfig.json
 {
   "target": "ES6",
   "module": "commonjs",
-  "outDir": "./dist",
-  "rootDir": "./src",
   "strict": true,
   "esModuleInterop": true
    "verbatimModuleSyntax": false,
@@ -28,6 +26,4 @@ package.json
 
 npm run dev
 
-
-hostname -I
 
