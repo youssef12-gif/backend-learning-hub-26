@@ -14,33 +14,7 @@ const createToken = (id: number): string => {
 // SIGN UP
 
 const signUp = async (req: Request, res: Response) => {
-  try {
-    const { username, email, password } = req.body;
-
-    const userExists = users.find(u => u.email === email);
-
-    if (userExists) {
-      return res.status(400).json({ msg: "User already exists" });
-    }
-
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    const newUser: User = {
-      id: users.length + 1,
-      username,
-      email,
-      password: hashedPassword,
-    };
-    
-    users.push(newUser);
-
-    res.status(201).json({
-      status: 201,
-      data: newUser,
-    });
-  } catch (error) {
-    res.status(500).json({ msg: "Server error" });
-  }
+  
 };
 
 
