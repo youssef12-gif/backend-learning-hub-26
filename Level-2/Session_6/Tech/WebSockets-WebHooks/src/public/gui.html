@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>WebSocket Session</title>
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f2f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .chat-container {
+      width: 500px;
+      background: #fff;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0px 5px 20px rgba(0,0,0,0.2);
+    }
+    h2 { text-align: center; }
+    input { padding: 5px; margin: 5px 0; width: 70%; }
+    button { padding: 5px 10px; margin-left: 5px; }
+    ul { list-style: none; padding: 0; max-height: 200px; overflow-y: auto; border: 1px solid #ddd; border-radius: 10px; padding: 10px; }
+    li { margin-bottom: 5px; padding: 5px; border-radius: 5px; background: #f7f7f7; }
+    .message-sender { font-weight: bold; }
+  </style>
+</head>
+<body>
+
+<div class="chat-container">
+  <h2>WebSocket Session</h2>
+  <p>
+  Your Name: <span id="username" style="color: #929a21; font-weight: bold;"></span> 
+  | ID: <span id="socketId"></span>
+</p>
+  <hr>
+
+  <!-- Broadcast -->
+  <!-- <h3>1️⃣ Broadcast</h3>
+  <input id="broadcastInput" placeholder="Message to all">
+  <button onclick="sendBroadcast()">Send Broadcast</button> -->
+
+  <!-- <hr> -->
+
+  <!-- Private -->
+  <!-- <h3>2️⃣ Private Message</h3>
+  <input id="targetId" placeholder="Target Socket ID">
+  <input id="privateMsg" placeholder="Private message">
+  <button onclick="sendPrivate()">Send Private</button> -->
+
+  <!-- <hr> -->
+
+  <!-- Room -->
+  <h3>3️⃣ Room Chat</h3>
+  <input id="roomName" placeholder="Room name">
+  <button onclick="joinRoom()">Join Room</button>
+  <br><br>
+  <input id="roomMsg" placeholder="Message to room">
+  <button onclick="sendToRoom()">Send To Room</button>
+
+  <!-- <hr> -->
+
+  <h3>Messages:</h3>
+  <ul id="messages"></ul>
+</div>
+
+<script>
+  // Random names
+  const names = ["Banana", "Apple", "Mango", "Orange"];
+  const username = names[Math.floor(Math.random() * names.length)];
+  document.getElementById("username").innerText = username;
+
+  const socket = io("http://localhost:3000");
+
+  const messages = document.getElementById("messages");
+  const socketIdSpan = document.getElementById("socketId");
+
+  socket.on("connect", () => {
+    socketIdSpan.innerText = socket.id;
+  });
+
+  // =====================
+  // Broadcast
+  // =====================
+  function sendBroadcast() {
+    const msg = document.getElementById("broadcastInput").value;
+    if(!msg) return;
+    socket.emit("broadcast", `${username}: ${msg}`);
+    document.getElementById("broadcastInput").value = '';
+  }
+
+  socket.on("broadcast", (msg) => {
+    addMessage("Broadcast: " + msg);
+  });
+
+  // =====================
+  // Private
+  // =====================
+  function sendPrivate() {
+    const targetId = document.getElementById("targetId").value;
+    const msg = document.getElementById("privateMsg").value;
+    if(!targetId || !msg) return;
+
+    socket.emit("privatechannel", {
+      targetclientid: targetId,
+      msg: `${username}: ${msg}`
+    });
+
+    // Show message on sender side
+    addMessage(`Private (to ${targetId}): ${username}: ${msg}`);
+    document.getElementById("privateMsg").value = '';
+  }
+
+  socket.on("privatechannel", (msg) => {
+    addMessage(`Private: ${msg}`);
+  });
+
+  // =====================
+  // Room
+  // =====================
+  function joinRoom() {
+    const room = document.getElementById("roomName").value;
+    if(!room) return;
+    socket.emit("join_room", { roomName: room });
+  }
+
+  function sendToRoom() {
+    const room = document.getElementById("roomName").value;
+    const msg = document.getElementById("roomMsg").value;
+    if(!room || !msg) return;
+
+    socket.emit("send_to_room", {
+      roomName: room,
+      message: `${username}: ${msg}`
+    });
+    document.getElementById("roomMsg").value = '';
+  }
+
+  socket.on("receive_message", (data) => {
+    addMessage(`Room (${data.sender}): ${data.message}`);
+  });
+
+  socket.on("joined_room", (msg) => {
+    addMessage(msg);
+  });
+
+  // =====================
+  function addMessage(text) {
+    const li = document.createElement("li");
+    li.innerText = text;
+    messages.appendChild(li);
+    messages.scrollTop = messages.scrollHeight; // auto scroll
+  }
+</script>
+
+</body>
+</html>
