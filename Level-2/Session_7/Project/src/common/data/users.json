@@ -1,0 +1,29 @@
+[
+  {
+    "id": 1,
+    "email": "sohibhassan827@gmail.com",
+    "username": "Sohaib",
+    "password": "$2b$10$D4rMujGOUMR5fjTXFhZ7h.vnAcCD/yZrGWALNWKiZJjVxZ583LtWi",
+    "age": 20,
+    "role": "admin",
+    "avatar": "http://res.cloudinary.com/drxoe5w8w/image/upload/v1771940507/users/avatar/aownabivgj21if63drby.png"
+  },
+  {
+    "id": 2,
+    "email": "sohibhassan82@gmail.com",
+    "username": "Sohaib",
+    "password": "$2b$10$yteOE5S0yQXIT1IDOvHL2umSA8HWG58ke8d2s5JIKBI/NhsFTeMzW",
+    "age": 20,
+    "role": "admin",
+    "avatar": "https://res.cloudinary.com/dspfo4tsu/image/upload/v1771355339/11_uaza28.jpg"
+  },
+  {
+    "id": 3,
+    "email": "sohibhassan8@gmail.com",
+    "username": "Sohaib",
+    "password": "$2b$10$beWPABPIgUxZG1NuQeI1jO337Ac.G6QNpsnnozZAtv7CiDOHPx/RW",
+    "age": 20,
+    "role": "admin",
+    "avatar": "http://res.cloudinary.com/drxoe5w8w/image/upload/v1771940870/users/avatar/gy5mfx6cxf5yllza1ftl.png"
+  }
+]
