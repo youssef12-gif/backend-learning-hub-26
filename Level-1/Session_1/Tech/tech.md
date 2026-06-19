@@ -54,7 +54,7 @@ This phase is part of **run preparation**, not actual runtime.
 
 ---
 
-### Phase 3 — Execution Phase (Inside the Execution Context)
+### Phase 3 — [Execution Phase (Inside the Execution Context)](https://www.youtube.com/watch?v=OlCtKjl5sPQ)
 
 Now JavaScript **executes your code line by line**.
 
