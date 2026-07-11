@@ -39,19 +39,19 @@ function orderRice(callback: (message:string)=>void){
 
 //===========================3=============================
 
-// const koshariOrder:Promise<string> = new Promise((resolve , reject) => {
-//      setTimeout(() => {
-//          resolve("Order ready! 🍝")
-//      } , 2000)
-// });
+ const koshariOrder:Promise<string> = new Promise((resolve , reject) => {
+      setTimeout(() => {
+          resolve("Order ready! 🍝")
+      } , 2000)
+ });
 
 // koshariOrder
 // .then(data => console.log(data))
 // .catch(err => console.error(err));
 
-// const sauceOrder:Promise<string> = new Promise((resolve , reject) => {
-//      reject("We're out of da2a!");
-// });
+ const sauceOrder:Promise<string> = new Promise((resolve , reject) => {
+      reject("We're out of da2a!");
+ });
 
 // sauceOrder.catch(err => console.error(err));
 
@@ -75,8 +75,6 @@ function getSauce(chickpeas:string):Promise<string>{
        resolve("Sauce added, previous: " + chickpeas);
     })
 }
-
-
 
 // getRice()
 // .then((rice:string) => {
